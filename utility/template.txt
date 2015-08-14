@@ -1,0 +1,29 @@
+var React = require('react');
+var helpers = require('svg-react-loader/helpers');
+
+module.exports = React.createClass({
+
+    displayName: <%= JSON.stringify(displayName) %>,
+
+    getDefaultProps () {
+        return <%= JSON.stringify(initialProps) %>;
+    },
+
+    xmlReactLoader: <%= JSON.stringify(context) %>,
+
+    componentDidMount () {
+        helpers.applyUnsafe(this);
+    },
+
+    render () {
+        var props = this.props;
+        var children = props.children;
+
+        return (
+            <<%= tagName %> {...this.props}>
+                <%= innerXml %>
+                {React.Children.map(children, (c) => (c))}
+            </<%= tagName %>>
+        );
+    }
+});

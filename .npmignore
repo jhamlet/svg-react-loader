@@ -1,3 +1,6 @@
 .DS_Store
 gulpfile.js
 test
+tmpl
+webpack.test.html
+build.js

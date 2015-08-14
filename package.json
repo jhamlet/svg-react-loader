@@ -1,21 +1,27 @@
 {
     "name": "svg-react-loader",
-    "fullname": "SVG to React",
-    "description": "Webpack SVG to React Component Loader",
-    "version": "0.0.0",
+    "fullname": "SVG to React Loader",
+    "description": "A Webpack Loader to turn SVGs into React Components",
+    "version": "0.1.0",
     "keywords": [
         "webpack",
         "loader",
         "react",
         "svg",
-        "component"
+        "component",
+        "jsx"
     ],
     "main": "./index.js",
     "dependencies": {
         "xml2js":       "0.4.x",
-        "lodash":       "3.x"
+        "lodash":       "3.x",
+        "loader-utils": "0.x"
     },
     "devDependencies": {
+        "babel-loader": "5.x",
+        "babel-core":   "5.x",
+        "react":        ">=0.12",
+        "webpack":      "1.x",
         "mocha":        "2.x",
         "should":       "6.x",
         "del":          "*",
@@ -24,10 +30,16 @@
         "gulp-ejs":     "*",
         "gulp-concat":  "*"
     },
+    "peerDependencies": {
+        "babel-core":   "5.x",
+        "react":        ">=0.12"
+    },
     "scripts": {
         "build": "./node_modules/.bin/gulp",
         "clobber": "./node_modules/.bin/gulp clobber",
-        "test": "./node_modules/.bin/mocha -R spec test/test-*.js"
+        "test": "./node_modules/.bin/mocha -R spec test/test-*.js",
+        "preinstall": "rm -f ./node_modules/svg-react-loader",
+        "postinstall": "ln -s ../ ./node_modules/svg-react-loader"
     },
     "licenses": [
         {

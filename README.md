@@ -1,13 +1,15 @@
-SVG to React
-============
+SVG to React Loader
+===================
 
-> Webpack SVG to React Component Loader
+> A Webpack Loader to turn SVGs into React Components
 
 
 Summary
 -------
 
+A wepack loader allowing for inline usage of a SVG as a React component, or for composing individual SVGs into larger ones.
 
+Handles namespaced attributes (xlink) on component mounting, so the returned `jsx` will compile cleanly with `babel`.
 
 Installation
 ------------
@@ -17,9 +19,32 @@ Installation
 ~~~
 
 
+Usage
+-----
+
+~~~js
+var React = require('react');
+var Icon = require('babel!xml-react!../svg/my-icon.svg?name=Icon');
+
+module.exports = React.createClass({
+    render () {
+        return <Icon className='normal' />;
+    }
+});
+~~~
+
 Documentation
 -------------
 
+### Query Params
+
+Query params can be used on the loader path, or on the resource's path. Those on the resource will override those given for the loader.
+
+`name`: `displayName` to use for the compiled component. Defaults to using the resource's file name, capitalized and camelCased. ex. `"?name=MyIcon"`
+
+`tag`: Override the root-level tag. If given, will blow-away any attributes given for the tag. ex.: `"?tag=symbol"`
+
+`attrs`: Attributes to apply to the root-level tag. If a certain attribute is already assigned to the tag, the value here will override that. ex.: `"?attrs={className: 'mySymbol'}"`
 
 Report an Issue
 ---------------
