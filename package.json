@@ -2,7 +2,7 @@
     "name": "svg-react-loader",
     "fullname": "SVG to React.createClass",
     "description": "Webpack SVG to React Component Loader",
-    "version": "0.1.0",
+    "version": "0.0.0",
     "keywords": [],
     "main": "./index.js",
     "dependencies": {
