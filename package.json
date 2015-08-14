@@ -1,9 +1,15 @@
 {
     "name": "svg-react-loader",
-    "fullname": "SVG to React.createClass",
+    "fullname": "SVG to React",
     "description": "Webpack SVG to React Component Loader",
     "version": "0.0.0",
-    "keywords": [],
+    "keywords": [
+        "webpack",
+        "loader",
+        "react",
+        "svg",
+        "component"
+    ],
     "main": "./index.js",
     "dependencies": {
         "xml2js":       "0.4.x",
@@ -16,8 +22,7 @@
         "gulp":         "3.x",
         "gulp-util":    "*",
         "gulp-ejs":     "*",
-        "gulp-concat":  "*",
-        "gulp-jsdoc":   "*"
+        "gulp-concat":  "*"
     },
     "scripts": {
         "build": "./node_modules/.bin/gulp",
