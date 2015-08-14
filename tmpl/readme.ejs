@@ -1,0 +1,42 @@
+<%- pkg.fullname %>
+<%- Array(pkg.fullname.length+1).join("=") %>
+
+> <%-pkg.description%>
+
+
+Summary
+-------
+
+
+
+Installation
+------------
+
+~~~
+% npm install <%-pkg.name%>
+~~~
+
+
+Documentation
+-------------
+
+
+Report an Issue
+---------------
+
+* [Bugs](<%=pkg.bugs.url%>)
+* Contact the author: <jerry@hamletink.com>
+
+
+License
+-------
+
+<%-
+    license.
+    split("\n").
+    filter(function (line, idx, list) {
+        return !(idx === list.length - 1 && /^\s*$/.test(line));
+    }).
+    map(function (line) { return "> " + line; }).
+    join("\n")
+%>

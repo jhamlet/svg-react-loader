@@ -1,0 +1,40 @@
+{
+    "name": "svg-react-loader",
+    "fullname": "SVG to React.createClass",
+    "description": "Webpack SVG to React Component Loader",
+    "version": "0.1.0",
+    "keywords": [],
+    "main": "./index.js",
+    "dependencies": {
+        "xml2js":       "0.4.x",
+        "lodash":       "3.x"
+    },
+    "devDependencies": {
+        "mocha":        "2.x",
+        "should":       "6.x",
+        "del":          "*",
+        "gulp":         "3.x",
+        "gulp-util":    "*",
+        "gulp-ejs":     "*",
+        "gulp-concat":  "*",
+        "gulp-jsdoc":   "*"
+    },
+    "scripts": {
+        "build": "./node_modules/.bin/gulp",
+        "clobber": "./node_modules/.bin/gulp clobber",
+        "test": "./node_modules/.bin/mocha -R spec test/test-*.js"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://github.com/jhamlet/svg-react-loader/raw/master/LICENSE"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/jhamlet/svg-react-loader.git"
+    },
+    "bugs": {
+        "url": "http://github.com/jhamlet/svg-react-loader/issues"
+    }
+}
