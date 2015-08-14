@@ -1,5 +1,5 @@
-SVG to React.createClass
-========================
+SVG to React
+============
 
 > Webpack SVG to React Component Loader
 
