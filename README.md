@@ -24,7 +24,7 @@ Usage
 
 ~~~js
 var React = require('react');
-var Icon = require('babel!xml-react!../svg/my-icon.svg?name=Icon');
+var Icon = require('babel!svg-react!../svg/my-icon.svg?name=Icon');
 
 module.exports = React.createClass({
     render () {

@@ -49,7 +49,7 @@ module.exports = function (source) {
 
         var tagName = keys(result)[0];
         var root    = result[tagName];
-        var context  = {};
+        var context = {};
         var props   = sanitize(root, context).$ || {};
 
         if (tag) {
