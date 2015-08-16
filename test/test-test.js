@@ -1,5 +1,5 @@
 /*globals describe, it*/
-var loader = require('svg-react-loader');
+var loader = require('../');
 var babel  = require('babel-core');
 var fs     = require('fs');
 var path   = require('path');
@@ -39,7 +39,7 @@ describe('something', function () {
 
     it('should do something', function (done) {
         // var filename = 'ffg-sw-advantage.svg';
-        var filename = 'mashup.svg';
+        var filename = './svg/mashup.svg';
         invoke(read(filename), {
             callback: function (error, result) {
                 if (error) {
