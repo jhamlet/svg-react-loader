@@ -34,7 +34,7 @@ module.exports = function (source) {
 
     if (params.attrs) {
         // easier than having to write json in the query
-        // if anyone wants to exploit it, its their build process
+        // if anyone wants to exploit it, it's their build process
         /*eslint no-eval:0*/
         eval('assign(attrs, ' + params.attrs + ');');
     }
@@ -49,26 +49,23 @@ module.exports = function (source) {
 
         var tagName = keys(result)[0];
         var root    = result[tagName];
-        var context = {};
-        var props   = sanitize(root, context).$ || {};
 
         if (tag) {
-            result[tag] = root;
+            root = result[tag] = root;
             delete result[tagName];
             tagName = tag;
-            props = {};
+            props = root.$ = {};
         }
 
-        props = assign(props, attrs);
+        var props = assign(sanitize(root).$ || {}, attrs);
 
         var xmlBuilder = new xml2js.Builder({ headless: true });
         var xmlSrc = xmlBuilder.buildObject(result);
         var component = tmpl({
             tagName:       tagName,
             displayName:   displayName,
-            initialProps:  props,
-            innerXml:      xmlSrc.split(/\n/).slice(1, -1).join('\n'),
-            context:       context
+            defaultProps:  props,
+            innerXml:      xmlSrc.split(/\n/).slice(1, -1).join('\n')
         });
 
         callback(null, component);

@@ -1,37 +1,36 @@
-var React   = require('react');
-var keys    = require('lodash/object/keys');
-var rootKey = 'xmlReactLoader-root';
-
-var NS_SEPARATOR = ':';
+var React    = require('react');
+var forEach  = require('lodash/collection/forEach');
+var ATTR_KEY = 'data-svgreactloader';
 
 module.exports = {
     /**
+     * @param {HTMLElement}
+     */
+    applyAttributes: function (el) {
+        var data = this.hasXmlAttributes(el);
+        if (data) {
+            forEach(JSON.parse(data), function (args) {
+                var method = 'setAttribute' + (args.length === 3 ? 'NS' : '');
+                el[method].apply(el, args);
+            });
+        }
+    },
+    /**
+     * @param {HTMLElement}
+     */
+    hasXmlAttributes: function (el) {
+        return el && el.getAttribute(ATTR_KEY);
+    },
+    /**
      * @param {React.Component}
      */
-    applyUnsafe: function (component) {
-        var context = component.xmlReactLoader;
-        var namespaces = context.ns;
-        var map = context.map;
+    applyXmlAttributes: function (component) {
+        var domEl = React.findDOMNode(component);
+        var fn = this.applyAttributes.bind(this);
 
-        keys(map).
-            forEach(function (key) {
-                var ref   = key === rootKey ? component : component.refs[key];
-                var el    = React.findDOMNode(ref);
-                var attrs = map[key];
-
-                keys(attrs).
-                    forEach(function (key) {
-                        var i = key.indexOf(NS_SEPARATOR);
-                        var nskey = key.slice(0, i);
-                        var attr = key.slice(i + 1);
-
-                        if (namespaces[nskey]) {
-                            el.setAttributeNS(namespaces[nskey], attr, attrs[key]);
-                        }
-                        else {
-                            el.setAttribute(key, attrs[key]);
-                        }
-                    });
-            });
+        if (domEl) {
+            fn(domEl);
+            forEach(domEl.querySelectorAll('[' + ATTR_KEY + ']'), fn);
+        }
     }
 };

@@ -6,13 +6,11 @@ module.exports = React.createClass({
     displayName: <%= JSON.stringify(displayName) %>,
 
     getDefaultProps () {
-        return <%= JSON.stringify(initialProps) %>;
+        return <%= JSON.stringify(defaultProps) %>;
     },
 
-    xmlReactLoader: <%= JSON.stringify(context) %>,
-
     componentDidMount () {
-        helpers.applyUnsafe(this);
+        helpers.applyXmlAttributes(this);
     },
 
     render () {

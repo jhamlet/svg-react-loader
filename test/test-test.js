@@ -1,5 +1,5 @@
 /*globals describe, it*/
-var loader = require('../');
+var loader = require('svg-react-loader');
 var babel  = require('babel-core');
 var fs     = require('fs');
 var path   = require('path');
@@ -50,6 +50,7 @@ describe('something', function () {
                 done();
             },
             resourcePath: filename
+            // resourceQuery: '?tag=foo&attrs={foo: \'bar\'}'
         });
     });
 });
