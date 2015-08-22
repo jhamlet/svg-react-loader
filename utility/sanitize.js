@@ -5,6 +5,10 @@ var ATTR_KEY          = '$';
 var NS_SEPARATOR      = ':';
 var DATA_ATTR_KEY     = 'data-svgreactloader';
 var XML_NAMESPACE_KEY = 'xmlns';
+var TRANSFORMS = {
+    'class': 'className',
+    'for': 'htmlFor'
+};
 
 /**
  * Remove any non-jsx xml attributes from the given node and any of its child
@@ -40,7 +44,7 @@ module.exports = function sanitize (xmlNode, namespaces) {
                 acc[DATA_ATTR_KEY].push([namespaces[nsKey], attr, value]);
             }
             else {
-                acc[key] = value;
+                acc[TRANSFORMS[key] || key] = value;
             }
 
             return acc;
