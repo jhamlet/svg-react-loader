@@ -1,11 +1,19 @@
 var keys = require('lodash/object/keys');
 var omit = require('lodash/object/omit');
+var camelCase = require('lodash/string/camelCase');
 
-var ATTR_KEY          = '$';
+var XML_ATTR_KEY      = '$';
+var XML_TEXT_NODE_KEY = '_';
 var NS_SEPARATOR      = ':';
 var DATA_ATTR_KEY     = 'data-svgreactloader';
 var XML_NAMESPACE_KEY = 'xmlns';
-var TRANSFORMS = {
+
+var XML_NAMESPACES = {
+    svg: 'http://www.w3.org/2000/svg',
+    xlink: 'http://www.w3.org/1999/xlink'
+};
+
+var RESERVED_KEYS = {
     'class': 'className',
     'for': 'htmlFor'
 };
@@ -14,58 +22,61 @@ var TRANSFORMS = {
  * Remove any non-jsx xml attributes from the given node and any of its child
  * nodes. Return the original node sanitized.
  *
- * @param {Object} xmlNode
+ * @param {Object|Object[]} xmlNode
+ * @param {Object} [namespaces]
  * @returns {Object} the node that was given
  */
 module.exports = function sanitize (xmlNode, namespaces) {
-    namespaces = namespaces || {};
+    namespaces = namespaces || Object.create(XML_NAMESPACES);
 
-    xmlNode.$ =
-        keys(xmlNode.$).
-        reduce(function (acc, key) {
-            var i      = key.indexOf(NS_SEPARATOR);
-            var hasSep = !!~i;
-            var ns     = hasSep && key.slice(0, i);
-            var attr   = hasSep ? key.slice(i + 1) : key;
-            var value  = xmlNode.$[key];
-            var nsKey  = hasSep ? ns : attr;
-
-            if (nsKey === XML_NAMESPACE_KEY && !hasSep) {
-                namespaces.xml = value;
-            }
-            else if (nsKey === XML_NAMESPACE_KEY) {
-                namespaces[attr] = value;
-            }
-
-            nsKey = nsKey === XML_NAMESPACE_KEY ? 'xml' : nsKey;
-
-            if (ns && attr) {
-                acc[DATA_ATTR_KEY] = acc[DATA_ATTR_KEY] || [];
-                acc[DATA_ATTR_KEY].push([namespaces[nsKey], attr, value]);
-            }
-            else {
-                acc[TRANSFORMS[key] || key] = value;
-            }
-
-            return acc;
-        }, {});
-
-    if (xmlNode.$[DATA_ATTR_KEY]) {
-        xmlNode.$[DATA_ATTR_KEY] = JSON.stringify(xmlNode.$[DATA_ATTR_KEY]);
+    if (Array.isArray(xmlNode)) {
+        xmlNode.
+        forEach(function (child) { sanitize(child, namespaces); });
     }
+    else {
+        if (xmlNode[XML_ATTR_KEY]) {
+            xmlNode[XML_ATTR_KEY] =
+                keys(xmlNode[XML_ATTR_KEY]).
+                reduce(function (acc, key) {
+                    var i      = key.indexOf(NS_SEPARATOR);
+                    var hasSep = !!~i;
+                    var ns     = hasSep && key.slice(0, i);
+                    var attr   = hasSep ? key.slice(i + 1) : key;
+                    var value  = xmlNode.$[key];
+                    var nsKey  = hasSep ? ns : attr;
 
-    keys(omit(xmlNode, ATTR_KEY)).
-        forEach(function (key) {
-            var child = xmlNode[key];
-            if (Array.isArray(child)) {
-                child.forEach(function (child) {
-                    sanitize(child, namespaces);
-                });
-            }
-            else {
-                sanitize(child, namespaces);
-            }
-        });
+                    if (nsKey === XML_NAMESPACE_KEY && !hasSep) {
+                        namespaces.xml = value;
+                    }
+                    else if (nsKey === XML_NAMESPACE_KEY) {
+                        namespaces[attr] = value;
+                    }
+
+                    nsKey = nsKey === XML_NAMESPACE_KEY ? 'xml' : nsKey;
+
+                    if (ns && attr) {
+                        acc[DATA_ATTR_KEY] = acc[DATA_ATTR_KEY] || [];
+                        acc[DATA_ATTR_KEY].push([namespaces[nsKey], attr, value]);
+                    }
+                    else {
+                        acc[RESERVED_KEYS[key] || camelCase(key)] = value;
+                    }
+
+                    return acc;
+                }, {});
+
+        }
+
+        keys(omit(xmlNode, [XML_ATTR_KEY, XML_TEXT_NODE_KEY])).
+            forEach(function (key) {
+                sanitize(xmlNode[key], namespaces);
+            });
+
+        if (xmlNode[XML_ATTR_KEY] && xmlNode[XML_ATTR_KEY][DATA_ATTR_KEY]) {
+            xmlNode[XML_ATTR_KEY][DATA_ATTR_KEY] =
+                JSON.stringify(xmlNode[XML_ATTR_KEY][DATA_ATTR_KEY]);
+        }
+    }
 
     return xmlNode;
 };
