@@ -7,16 +7,38 @@ var XML_TEXT_NODE_KEY = '_';
 var NS_SEPARATOR      = ':';
 var DATA_ATTR_KEY     = 'data-svgreactloader';
 var XML_NAMESPACE_KEY = 'xmlns';
+var TEXT_REGEX        = /(["'])/g;
 
 var XML_NAMESPACES = {
     svg: 'http://www.w3.org/2000/svg',
     xlink: 'http://www.w3.org/1999/xlink'
 };
 
+var STYLE_ATTR_KEY = 'style';
+
 var RESERVED_KEYS = {
     'class': 'className',
     'for': 'htmlFor'
 };
+
+/**
+ * @param {Object[]} nodes
+ */
+function sanitizeStyleNodes (nodes) {
+    nodes.
+        forEach(function (node, idx, context) {
+            var isText = typeof node === 'string';
+            var src = isText ? node : node[XML_TEXT_NODE_KEY];
+            var text = '{`' + src.replace(TEXT_REGEX, "\\$1") + '`}';
+
+            if (isText) {
+                context[idx] = text;
+            }
+            else {
+                node[XML_TEXT_NODE_KEY] = text;
+            }
+        });
+}
 
 /**
  * Remove any non-jsx xml attributes from the given node and any of its child
@@ -42,7 +64,7 @@ module.exports = function sanitize (xmlNode, namespaces) {
                     var hasSep = !!~i;
                     var ns     = hasSep && key.slice(0, i);
                     var attr   = hasSep ? key.slice(i + 1) : key;
-                    var value  = xmlNode.$[key];
+                    var value  = xmlNode[XML_ATTR_KEY][key];
                     var nsKey  = hasSep ? ns : attr;
 
                     if (nsKey === XML_NAMESPACE_KEY && !hasSep) {
@@ -54,7 +76,7 @@ module.exports = function sanitize (xmlNode, namespaces) {
 
                     nsKey = nsKey === XML_NAMESPACE_KEY ? 'xml' : nsKey;
 
-                    if (ns && attr) {
+                    if (ns && attr || attr === STYLE_ATTR_KEY) {
                         acc[DATA_ATTR_KEY] = acc[DATA_ATTR_KEY] || [];
                         acc[DATA_ATTR_KEY].push([namespaces[nsKey], attr, value]);
                     }
@@ -69,7 +91,12 @@ module.exports = function sanitize (xmlNode, namespaces) {
 
         keys(omit(xmlNode, [XML_ATTR_KEY, XML_TEXT_NODE_KEY])).
             forEach(function (key) {
-                sanitize(xmlNode[key], namespaces);
+                if (key === 'style') {
+                    sanitizeStyleNodes(xmlNode[key]);
+                }
+                else {
+                    sanitize(xmlNode[key], namespaces);
+                }
             });
 
         if (xmlNode[XML_ATTR_KEY] && xmlNode[XML_ATTR_KEY][DATA_ATTR_KEY]) {

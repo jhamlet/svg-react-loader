@@ -1,5 +1,5 @@
 var React = require('react');
-var MashUp = require('./svg/mashup.svg');
+var Styles = require('./svg/styles.svg');
 
-React.render(<MashUp />, document.getElementById('content'));
+React.render(<Styles />, document.getElementById('content'));
 

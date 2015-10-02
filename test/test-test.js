@@ -1,4 +1,5 @@
 /*globals describe, it*/
+var react  = require('react');
 var loader = require('svg-react-loader');
 var babel  = require('babel-core');
 var fs     = require('fs');
@@ -51,6 +52,32 @@ describe('something', function () {
             },
             resourcePath: filename
             // resourceQuery: '?tag=foo&attrs={foo: \'bar\'}'
+        });
+    });
+
+    it.only('should handle styles', function (done) {
+        var filename = './svg/styles.svg';
+
+        invoke(read(filename), {
+            callback: function (error, result) {
+                if (error) {
+                    throw error;
+                }
+
+                var src = babel.transform(result).code;
+                console.log(src);
+                fs.writeFileSync(__dirname + '/temp', src);
+                var el = react.createElement(require(__dirname + '/temp'));
+                var html = react.renderToStaticMarkup(el);
+
+                // var el = react.createElement('style');
+                // var html = react.renderToStaticMarkup(el);
+
+                console.log(html);
+                fs.unlink(__dirname + '/temp');
+                done();
+            },
+            resourcePath: filename
         });
     });
 });
