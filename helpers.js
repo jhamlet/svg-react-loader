@@ -1,13 +1,12 @@
-var React    = require('react');
 var forEach  = require('lodash/collection/forEach');
 var ATTR_KEY = 'data-svgreactloader';
 
-module.exports = {
+var MODULE = {
     /**
      * @param {HTMLElement}
      */
     applyAttributes: function (el) {
-        var data = this.hasXmlAttributes(el);
+        var data = MODULE.hasXmlAttributes(el);
         if (data) {
             forEach(JSON.parse(data), function (args) {
                 var method = 'setAttribute' + (args.length === 3 ? 'NS' : '');
@@ -25,8 +24,8 @@ module.exports = {
      * @param {React.Component}
      */
     applyXmlAttributes: function (component) {
-        var domEl = React.findDOMNode(component);
-        var fn = this.applyAttributes.bind(this);
+        var domEl = MODULE.reactDOM.findDOMNode(component);
+        var fn = MODULE.applyAttributes;
 
         if (domEl) {
             fn(domEl);
@@ -34,3 +33,11 @@ module.exports = {
         }
     }
 };
+
+module.exports = function helpers (reactDOM) {
+    if (!MODULE.reactDOM) {
+        MODULE.reactDOM = reactDOM;
+    }
+    return MODULE;
+};
+

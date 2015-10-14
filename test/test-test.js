@@ -16,7 +16,7 @@ var defaultMock = {
     },
     cacheable:      function () {},
     addDependency:  function () {},
-    query:          '',
+    query:          '?reactDOM=react',
     resourcePath:   'foo.svg'
     // resourceQuery:  '?tag=symbol&name=AdvantageIcon&attrs={foo:\'bar\'}'
 };
@@ -38,7 +38,7 @@ describe('something', function () {
         loader.should.be.a.function;
     });
 
-    it('should do something', function (done) {
+    it.only('should do something', function (done) {
         // var filename = 'ffg-sw-advantage.svg';
         var filename = './svg/mashup.svg';
         invoke(read(filename), {
@@ -50,12 +50,13 @@ describe('something', function () {
                 console.log(babel.transform(result).code);
                 done();
             },
-            resourcePath: filename
-            // resourceQuery: '?tag=foo&attrs={foo: \'bar\'}'
+            query: '?reactDom=react',
+            resourcePath: filename,
+            resourceQuery: '?tag=foo&attrs={foo: \'bar\'}'
         });
     });
 
-    it.only('should handle styles', function (done) {
+    it('should handle styles', function (done) {
         var filename = './svg/styles.svg';
 
         invoke(read(filename), {

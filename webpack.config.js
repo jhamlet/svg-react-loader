@@ -8,7 +8,7 @@ module.exports = {
     module: {
         loaders: [
             { test: /\.js$/, exclude: /node_modules/, loader: 'babel' },
-            { test: /\.svg$/, loader: 'babel!svg-react' }
+            { test: /\.svg$/, loader: 'babel!svg-react?reactDOM=react' }
         ]
     },
 
