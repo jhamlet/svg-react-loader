@@ -2,7 +2,7 @@
     "name": "svg-react-loader",
     "fullname": "SVG to React Loader",
     "description": "A Webpack Loader to turn SVGs into React Components",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "keywords": [
         "webpack",
         "loader",
@@ -33,19 +33,16 @@
     },
     "peerDependencies": {
         "babel-core":   "5.x",
-        "react":        ">=0.12"
+        "react":        ">=0.14",
+        "react-dom":    ">=0.14",
+        "babel-loader": "5.x"
     },
     "scripts": {
         "build": "./node_modules/.bin/gulp",
         "clobber": "./node_modules/.bin/gulp clobber",
         "test": "./node_modules/.bin/mocha -R spec test/test-*.js"
     },
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "http://github.com/jhamlet/svg-react-loader/raw/master/LICENSE"
-        }
-    ],
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "http://github.com/jhamlet/svg-react-loader.git"
