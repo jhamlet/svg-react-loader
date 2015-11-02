@@ -1,5 +1,5 @@
 var React = require('react');
-var Styles = require('./svg/styles.svg');
+var Text = require('./svg/text.svg');
 
-React.render(<Styles />, document.getElementById('content'));
+React.render(<Text />, document.getElementById('content'));
 

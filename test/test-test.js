@@ -38,7 +38,7 @@ describe('something', function () {
         loader.should.be.a.function;
     });
 
-    it.only('should do something', function (done) {
+    it('should do something', function (done) {
         // var filename = 'ffg-sw-advantage.svg';
         var filename = './svg/mashup.svg';
         invoke(read(filename), {
@@ -58,6 +58,32 @@ describe('something', function () {
 
     it('should handle styles', function (done) {
         var filename = './svg/styles.svg';
+
+        invoke(read(filename), {
+            callback: function (error, result) {
+                if (error) {
+                    throw error;
+                }
+
+                var src = babel.transform(result).code;
+                console.log(src);
+                fs.writeFileSync(__dirname + '/temp', src);
+                var el = react.createElement(require(__dirname + '/temp'));
+                var html = react.renderToStaticMarkup(el);
+
+                // var el = react.createElement('style');
+                // var html = react.renderToStaticMarkup(el);
+
+                console.log(html);
+                fs.unlink(__dirname + '/temp');
+                done();
+            },
+            resourcePath: filename
+        });
+    });
+
+    it.only('should handle text elements', function (done) {
+        var filename = './svg/text.svg';
 
         invoke(read(filename), {
             callback: function (error, result) {

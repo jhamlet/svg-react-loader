@@ -89,16 +89,23 @@ module.exports = function sanitize (xmlNode, namespaces) {
 
         }
 
+        // Process the children of this node
         keys(omit(xmlNode, [XML_ATTR_KEY, XML_TEXT_NODE_KEY])).
             forEach(function (key) {
-                if (key === 'style') {
-                    sanitizeStyleNodes(xmlNode[key]);
+                var node = xmlNode[key];
+
+                if (typeof node === 'string') {
+                    return;
+                }
+                else if (key === 'style') {
+                    sanitizeStyleNodes(node);
                 }
                 else {
-                    sanitize(xmlNode[key], namespaces);
+                    sanitize(node, namespaces);
                 }
             });
 
+        // Serialize our data attribute
         if (xmlNode[XML_ATTR_KEY] && xmlNode[XML_ATTR_KEY][DATA_ATTR_KEY]) {
             xmlNode[XML_ATTR_KEY][DATA_ATTR_KEY] =
                 JSON.stringify(xmlNode[XML_ATTR_KEY][DATA_ATTR_KEY]);
