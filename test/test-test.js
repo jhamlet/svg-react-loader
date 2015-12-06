@@ -47,7 +47,9 @@ describe('something', function () {
                     throw error;
                 }
 
-                console.log(babel.transform(result).code);
+                console.log(babel.transform(result, {
+                    presets: ['es2015', 'react']
+                }).code);
                 done();
             },
             query: '?reactDom=react',
@@ -65,7 +67,9 @@ describe('something', function () {
                     throw error;
                 }
 
-                var src = babel.transform(result).code;
+                var src = babel.transform(result, {
+                    presets: ['es2015', 'react']
+                }).code;
                 console.log(src);
                 fs.writeFileSync(__dirname + '/temp', src);
                 var el = react.createElement(require(__dirname + '/temp'));
@@ -91,7 +95,9 @@ describe('something', function () {
                     throw error;
                 }
 
-                var src = babel.transform(result).code;
+                var src = babel.transform(result, {
+                    presets: ['es2015', 'react']
+                }).code;
                 console.log(src);
                 fs.writeFileSync(__dirname + '/temp', src);
                 var el = react.createElement(require(__dirname + '/temp'));
