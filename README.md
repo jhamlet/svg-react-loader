@@ -91,7 +91,7 @@ As of `babel@6.0` you must specify your
 
 See [Quick guide: how to update Babel 5.x ->
 6.x](https://medium.com/@malyw/how-to-update-babel-5-x-6-x-d828c230ec53#.3z99fxfmq)
-for a quick guide on upgrading from `babel@5.x` to `babel@6.x`
+for more details.
 
 
 ### React Before Version 0.14.0
