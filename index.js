@@ -78,10 +78,18 @@ module.exports = function (source) {
     var attrs       = {};
 
     if (params.attrs) {
-        // easier than having to write json in the query
-        // if anyone wants to exploit it, it's their build process
-        /*eslint no-eval:0*/
-        eval('assign(attrs, ' + params.attrs + ');');
+
+        if (Object.prototype.toString.apply(params.attrs) === '[object Object]') {
+
+            // fix issue https://github.com/jhamlet/svg-react-loader/issues/15
+            assign(attrs, params.attrs);
+        } else {
+
+            // easier than having to write json in the query
+            // if anyone wants to exploit it, it's their build process
+            /*eslint no-eval:0*/
+            eval('assign(attrs, ' + params.attrs + ');');
+        }
     }
 
     var opts = {
