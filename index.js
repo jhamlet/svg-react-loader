@@ -75,19 +75,12 @@ module.exports = function (source) {
     var displayName = params.name || getName(rsrcPath);
     var tag         = params.tag || null;
     var reactDom    = params.reactDom || 'react-dom';
-    var attrs       = {};
-
-    if (params.attrs) {
-        // easier than having to write json in the query
-        // if anyone wants to exploit it, it's their build process
-        /*eslint no-eval:0*/
-        eval('assign(attrs, ' + params.attrs + ');');
-    }
+    var attrs       = assign({}, params.attrs || {});
 
     var opts = {
-        reactDom: reactDom,
-        tagName: tag,
-        attrs: attrs,
+        reactDom:    reactDom,
+        tagName:     tag,
+        attrs:       attrs,
         displayName: displayName
     };
 

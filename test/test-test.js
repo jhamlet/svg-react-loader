@@ -1,6 +1,6 @@
 /*globals describe, it*/
 var react  = require('react');
-var loader = require('svg-react-loader');
+var loader = require('../');
 var babel  = require('babel-core');
 var fs     = require('fs');
 var path   = require('path');
@@ -33,7 +33,7 @@ function read (filepath) {
     return fs.readFileSync(path.join(__dirname, filepath), 'utf8');
 }
 
-describe('something', function () {
+describe('svg-react-loader', function () {
     it('should return a function', function () {
         loader.should.be.a.function;
     });
@@ -111,6 +111,30 @@ describe('something', function () {
                 done();
             },
             resourcePath: filename
+        });
+    });
+
+    it('json query', function (done) {
+        var filename = './svg/text.svg';
+
+        invoke(read(filename), {
+            callback: function (/*error, result*/) {
+                done();
+            },
+            query: '?' + JSON.stringify({
+                attrs: {
+                    style: {},
+                    width: 'auto',
+                    height: 'auto'
+                }
+            }),
+            resourceQuery: '?' + JSON.stringify({
+                attrs: {
+                    style: {},
+                    width: 'auto',
+                    height: 'auto'
+                }
+            })
         });
     });
 });
