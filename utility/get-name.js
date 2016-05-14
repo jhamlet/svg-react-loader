@@ -1,5 +1,5 @@
 var path = require('path');
-var camelCase = require('lodash/string/camelCase');
+var camelCase = require('lodash/camelCase');
 
 module.exports = function getName (filepath) {
     var ext      = path.extname(filepath);
