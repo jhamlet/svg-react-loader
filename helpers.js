@@ -1,4 +1,4 @@
-var forEach  = require('lodash/collection/forEach');
+var forEach  = require('lodash/forEach');
 var ATTR_KEY = 'data-svgreactloader';
 
 var MODULE = {
@@ -40,4 +40,3 @@ module.exports = function helpers (reactDOM) {
     }
     return MODULE;
 };
-
