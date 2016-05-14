@@ -1,50 +1,50 @@
 {
-    "name": "svg-react-loader",
-    "fullname": "SVG to React Loader",
-    "description": "A Webpack Loader to turn SVGs into React Components",
-    "version": "0.3.3",
-    "keywords": [
-        "webpack",
-        "loader",
-        "react",
-        "svg",
-        "component",
-        "jsx"
-    ],
-    "main": "./index.js",
-    "dependencies": {
-        "xml2js":       "^0.4",
-        "lodash":       "^3.10",
-        "loader-utils": "^0.2"
-    },
-    "devDependencies": {
-        "react":               "^0.14",
-        "react-dom":           "^0.14",
-        "babel-core":          "^6.0",
-        "babel-loader":        "^6.0",
-        "babel-preset-es2015": "^6.3",
-        "babel-preset-react":  "^6.3",
-        "webpack":             "^1.0",
-        "webpack-dev-server":  "^1.0",
-        "mocha":               "^2.0",
-        "should":              "^7.0",
-        "del":                 "^2.2",
-        "gulp":                "^3.0",
-        "gulp-util":           "^3.0",
-        "gulp-ejs":            "^1.2",
-        "gulp-concat":         "^2.0"
-    },
-    "scripts": {
-        "build":   "./node_modules/.bin/gulp",
-        "clobber": "./node_modules/.bin/gulp clobber",
-        "test":    "./node_modules/.bin/mocha -R spec test/test-*.js"
-    },
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "http://github.com/jhamlet/svg-react-loader.git"
-    },
-    "bugs": {
-        "url": "http://github.com/jhamlet/svg-react-loader/issues"
-    }
+  "name": "svg-react-loader",
+  "fullname": "SVG to React Loader",
+  "description": "A Webpack Loader to turn SVGs into React Components",
+  "version": "0.3.3",
+  "keywords": [
+    "webpack",
+    "loader",
+    "react",
+    "svg",
+    "component",
+    "jsx"
+  ],
+  "main": "./index.js",
+  "dependencies": {
+    "loader-utils": "^0.2",
+    "lodash": "^4.12.0",
+    "xml2js": "^0.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0",
+    "babel-loader": "^6.0",
+    "babel-preset-es2015": "^6.3",
+    "babel-preset-react": "^6.3",
+    "del": "^2.2",
+    "gulp": "^3.0",
+    "gulp-concat": "^2.0",
+    "gulp-ejs": "^1.2",
+    "gulp-util": "^3.0",
+    "mocha": "^2.0",
+    "react": "^0.14",
+    "react-dom": "^0.14",
+    "should": "^7.0",
+    "webpack": "^1.0",
+    "webpack-dev-server": "^1.0"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/gulp",
+    "clobber": "./node_modules/.bin/gulp clobber",
+    "test": "./node_modules/.bin/mocha -R spec test/test-*.js"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jhamlet/svg-react-loader.git"
+  },
+  "bugs": {
+    "url": "http://github.com/jhamlet/svg-react-loader/issues"
+  }
 }

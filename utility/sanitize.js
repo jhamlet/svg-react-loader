@@ -1,6 +1,6 @@
-var keys = require('lodash/object/keys');
-var omit = require('lodash/object/omit');
-var camelCase = require('lodash/string/camelCase');
+var keys = require('lodash/keys');
+var omit = require('lodash/omit');
+var camelCase = require('lodash/camelCase');
 
 var XML_ATTR_KEY      = '$';
 var XML_TEXT_NODE_KEY = '_';

@@ -4,10 +4,10 @@ var lutils   = require('loader-utils');
 var sanitize = require('./utility/sanitize');
 var getName  = require('./utility/get-name');
 var xml2js   = require('xml2js');
-var template = require('lodash/string/template');
-var assign   = require('lodash/object/assign');
-var keys     = require('lodash/object/keys');
-var partial  = require('lodash/function/partial');
+var template = require('lodash/template');
+var assign   = require('lodash/assign');
+var keys     = require('lodash/keys');
+var partial  = require('lodash/partial');
 
 function readTemplate (callback, filepath) {
     fs.readFile(filepath, 'utf8', function (error, contents) {
