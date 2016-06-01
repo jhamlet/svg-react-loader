@@ -2,7 +2,7 @@
     "name": "svg-react-loader",
     "fullname": "SVG to React Loader",
     "description": "A Webpack Loader to turn SVGs into React Components",
-    "version": "0.3.4",
+    "version": "0.3.5",
     "keywords": [
         "webpack",
         "loader",
@@ -46,5 +46,9 @@
     },
     "bugs": {
         "url": "http://github.com/jhamlet/svg-react-loader/issues"
-    }
+    },
+    "contributors": [
+        "Jerry Hamlet <jerry@hamletink.com> (http://hamletink.com)",
+        "Jonathan Ong <me@jongleberry.com> (http://twitter.com/jongleberry)"
+    ]
 }
