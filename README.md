@@ -37,64 +37,8 @@ module.exports = React.createClass({
 ~~~
 
 
-Documentation
--------------
-
-### Query Params
-
-Query params can be used on the loader path, or on the resource's path. Those on
-the resource will override those given for the loader.
-
-`name`: `displayName` to use for the compiled component. Defaults to using the
-resource's file name, capitalized and camelCased. ex. `"?name=MyIcon"`
-
-`tag`: Override the root-level tag. If given, will blow-away any attributes
-given for the tag. ex.: `"?tag=symbol"`
-
-`attrs`: Attributes to apply to the root-level tag. If a certain attribute is
-already assigned to the tag, the value here will override that. ex.:
-`"?attrs={className: 'mySymbol'}"`
-
-`reactDom`: A string to require an alternaitve 'react-dom' module. ex.:
-`?reactDom=react`
-
-
-Dependencies
-------------
-
-As of **svg-react-loader@0.3.2** it no longer specifies any `peerDependencies`.
-It is left up to individual users to configure their local **webpack**
-installation to support this loader.
-
-**svg-react-loader** requires the following dependencies:
-
-~~~
-react
-react-dom
-babel-loader
-babel-core
-babel-preset-es2015
-babel-preset-react
-~~~
-
-> NOTE: you can review the `devDependences` of the
-> [package.json](./package.json) file for specific version numbers.
-
-The following cover specific dependencies and how to configure your webpack
-installation fro them.
-
-### Babel
-
-As of `babel@6.0` you must specify your
-[`presets`](http://babeljs.io/docs/plugins/#presets) to get this to work with
-`React`.
-
-See [Quick guide: how to update Babel 5.x ->
-6.x](https://medium.com/@malyw/how-to-update-babel-5-x-6-x-d828c230ec53#.3z99fxfmq)
-for more details.
-
-
-### React Before Version 0.14.0
+React Before Version 0.14.0
+---------------------------
 
 As of `React@0.14.0` the DOM methods have been moved into its own library
 `react-dom`.
@@ -128,6 +72,27 @@ module.exports = {
 
 Or, you can pass the correct module name to load with the [query
 params](#query-params).
+
+Documentation
+-------------
+
+### Query Params
+
+Query params can be used on the loader path, or on the resource's path. Those on
+the resource will override those given for the loader.
+
+`name`: `displayName` to use for the compiled component. Defaults to using the
+resource's file name, capitalized and camelCased. ex. `"?name=MyIcon"`
+
+`tag`: Override the root-level tag. If given, will blow-away any attributes
+given for the tag. ex.: `"?tag=symbol"`
+
+`attrs`: Attributes to apply to the root-level tag. If a certain attribute is
+already assigned to the tag, the value here will override that. ex.:
+`"?attrs={className: 'mySymbol'}"`
+
+`reactDom`: A string to require an alternaitve 'react-dom' module. ex.:
+`?reactDom=react`
 
 
 Report an Issue

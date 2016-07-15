@@ -1,5 +1,4 @@
-var React = require('react');
+var ReactDOM = require('react-dom');
 var Text = require('./svg/text.svg');
 
-React.render(<Text />, document.getElementById('content'));
-
+ReactDOM.render(<Text />, document.getElementById('content'));

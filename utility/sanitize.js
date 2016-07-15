@@ -76,7 +76,7 @@ module.exports = function sanitize (xmlNode, namespaces) {
 
                     nsKey = nsKey === XML_NAMESPACE_KEY ? 'xml' : nsKey;
 
-                    if (ns && attr || attr === STYLE_ATTR_KEY) {
+                    if (ns && attr || attr === STYLE_ATTR_KEY || attr === XML_NAMESPACE_KEY) {
                         acc[DATA_ATTR_KEY] = acc[DATA_ATTR_KEY] || [];
                         acc[DATA_ATTR_KEY].push([namespaces[nsKey], attr, value]);
                     }
