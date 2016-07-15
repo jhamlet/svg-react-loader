@@ -1,5 +1,6 @@
 /*globals describe, it*/
 var react  = require('react');
+var reactDOMServer  = require('react-dom/server');
 var loader = require('../');
 var babel  = require('babel-core');
 var fs     = require('fs');
@@ -73,10 +74,10 @@ describe('svg-react-loader', function () {
                 console.log(src);
                 fs.writeFileSync(__dirname + '/temp', src);
                 var el = react.createElement(require(__dirname + '/temp'));
-                var html = react.renderToStaticMarkup(el);
+                var html = reactDOMServer.renderToStaticMarkup(el);
 
                 // var el = react.createElement('style');
-                // var html = react.renderToStaticMarkup(el);
+                // var html = reactDOMServer.renderToStaticMarkup(el);
 
                 console.log(html);
                 fs.unlink(__dirname + '/temp');
@@ -86,7 +87,7 @@ describe('svg-react-loader', function () {
         });
     });
 
-    it.only('should handle text elements', function (done) {
+    it('should handle text elements', function (done) {
         var filename = './svg/text.svg';
 
         invoke(read(filename), {
@@ -101,10 +102,10 @@ describe('svg-react-loader', function () {
                 console.log(src);
                 fs.writeFileSync(__dirname + '/temp', src);
                 var el = react.createElement(require(__dirname + '/temp'));
-                var html = react.renderToStaticMarkup(el);
+                var html = reactDOMServer.renderToStaticMarkup(el);
 
                 // var el = react.createElement('style');
-                // var html = react.renderToStaticMarkup(el);
+                // var html = reactDOMServer.renderToStaticMarkup(el);
 
                 console.log(html);
                 fs.unlink(__dirname + '/temp');
