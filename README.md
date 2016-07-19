@@ -89,9 +89,21 @@ As of `babel@6.0` you must specify your
 [`presets`](http://babeljs.io/docs/plugins/#presets) to get this to work with
 `React`.
 
-See [Quick guide: how to update Babel 5.x ->
-6.x](https://medium.com/@malyw/how-to-update-babel-5-x-6-x-d828c230ec53#.3z99fxfmq)
-for more details.
+Presets can be specified as part of a [Babel
+config](https://babeljs.io/docs/usage/babelrc/) as outlined in [Setting up Babel
+6](https://babeljs.io/blog/2015/10/31/setting-up-babel-6), or you may specify
+Babel presets for your loader within your webpack configuration:
+
+~~~js
+// file: webpack.config.js
+module.exports = {
+    
+    loaders: [
+        { test: /\.svg$/, loader: 'babel?presets[]=es2015,presets[]=react!svg-react' }
+    ],
+
+}
+~~~
 
 
 ### React Before Version 0.14.0
