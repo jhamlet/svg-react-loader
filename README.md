@@ -89,7 +89,10 @@ As of `babel@6.0` you must specify your
 [`presets`](http://babeljs.io/docs/plugins/#presets) to get this to work with
 `React`.
 
-Presets can be specified as part of a [Babel config](https://babeljs.io/docs/usage/babelrc/) as outlined in [Setting up Babel 6](https://babeljs.io/blog/2015/10/31/setting-up-babel-6), or you may specify Babel presets for your loader within your webpack configuration:
+Presets can be specified as part of a [Babel
+config](https://babeljs.io/docs/usage/babelrc/) as outlined in [Setting up Babel
+6](https://babeljs.io/blog/2015/10/31/setting-up-babel-6), or you may specify
+Babel presets for your loader within your webpack configuration:
 
 ~~~js
 // file: webpack.config.js
