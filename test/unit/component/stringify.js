@@ -41,8 +41,8 @@ describe('svg-react-loader/lib/component/stringify', () => {
                             'function SvgReactComponent (props) {\n' +
                             '    return React.createElement("svg",props,' +
                             '[React.createElement("rect",{"x":"0","y":"0",' +
-                            '"width":"16","height":"16","fill":"#fff"}),' +
-                            'React.createElement("text",null,["Foobar"])' +
+                            '"width":"16","height":"16","fill":"#fff","key":0}),' +
+                            'React.createElement("text",{"key":1},["Foobar"])' +
                             ']);\n' +
                             '}\n\n' +
                             'SvgReactComponent.displayName = "SvgReactComponent";\n\n' +
