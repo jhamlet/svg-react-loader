@@ -24,7 +24,7 @@ Note
 ----
 
 > As of version 0.4.0, `svg-react-loader` no longer requires `babel` to
-> transpile the generated code. Everything is returned as an ES5-7 compatable
+> transpile the generated code. Everything is returned as an ES5-7 compatible
 > module, and the component is just a
 > [function](https://facebook.github.io/react/docs/reusable-components.html#stateless-functions).
 > With that, it only works with React@>=0.14
