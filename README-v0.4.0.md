@@ -11,14 +11,14 @@ A wepack loader allowing for inline usage of a SVG as a React component, or for
 composing individual SVGs into larger ones.
 
 The latest version has been refactored to allow for receiving an SVG/XML string
-or an [object-tree](#object-tree-api) representing an SVG. This allows for other
-loaders before `svg-react` to alter/update/remove nodes before reaching
-`svg-react` and not having to convert back to an XML/SVG string.
+or an JSON [object-tree](#object-tree-api) representing an SVG. This allows for
+other loaders before `svg-react` to alter/update/remove nodes before reaching
+`svg-react`.
 
 In addition, the new [filters](#filters) API allows for additional ways to
 modify the generated SVG Component. This allows `svg-react` to also be used as a
-pre-loader (with `filters` and `stringify=false` params) for modifying SVGs
-before they are acted on by the loader version of `svg-react`.
+pre-loader (with `filters` and `raw=true` params) for modifying SVGs before they
+are acted on by the loader version of `svg-react`.
 
 Note
 ----
@@ -189,13 +189,13 @@ text nodes).
 ### Filters
 
 A filter is just a function that accepts one value, and it has the same `this`
-context as the `[traverse](https://www.npmjs.com/package/traverse)` API.
+context as the [traverse](https://www.npmjs.com/package/traverse) API.
 
 `svg-react-loader` is really just a series of filters applied to a parsed
 SVG/XML, or JSON, string and then regenerated as a string to form a React
 functional component.
 
-Review [sanitizers/filters](./sanitizers/filters) for some examples.
+Review [lib/sanitizers/filters](lib/sanitizers/filters) for some examples.
 
 Report an Issue
 ---------------
