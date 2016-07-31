@@ -195,7 +195,7 @@ context as the [traverse](https://www.npmjs.com/package/traverse) API.
 SVG/XML, or JSON, string and then regenerated as a string to form a React
 functional component.
 
-Review [lib/sanitizers/filters](lib/sanitizers/filters) for some examples.
+Review [lib/sanitizer/filters](lib/sanitizer/filters) for some examples.
 
 Report an Issue
 ---------------
