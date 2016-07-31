@@ -20,6 +20,16 @@ modify the generated SVG Component. This allows `svg-react` to also be used as a
 pre-loader (with `filters` and `stringify=false` params) for modifying SVGs
 before they are acted on by the loader version of `svg-react`.
 
+Note
+----
+
+> As of version 0.4.0, `svg-react-loader` no longer requires `babel` to
+> transpile the generated code. Everything is returned as an ES5-7 compatable
+> module, and the component is just a
+> [function](https://facebook.github.io/react/docs/reusable-components.html#stateless-functions).
+> With that, it only works with React@>=0.14
+
+
 Installation
 ------------
 
@@ -85,8 +95,9 @@ the resource will override those given for the loader.
   blocks, or within `className` properties, with. If indicated without a string,
   the file's basename will be used as a prefix.
 
-* `stringify`: If set to `false`, the loader will return an object tree of the
-  parsed SVG. Default is `true`.
+* `raw`: If set to `true` will output the parsed object tree repesenting the SVG
+  as a JSON string. Otherwise, returns a string of JavaScript that represents
+  the component's module.
 
 * `propsMap`: If given on the query string, it is an array of colon separated
   `propname:translatedname` pairs. If given in the webpack configuration as
@@ -134,7 +145,57 @@ import MyIcon from 'svg-react?filters[]=./my-filter.js!../svg/icon.svg';
 
 ### Object Tree API
 
+Internally, `svg-react-loader` converts the given SVG/XML into an object tree
+that looks something like:
+
+~~~js
+{
+    "tagname": "svg",
+    "props": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "xmlns:xlink": "http://www.w3.org/1999/xlink",
+        "viewBox": "0 0 16 16",
+        "enable-background": "new 0 0 16 16",
+        "xml:space": "preserve"
+    },
+    "children": [
+        {
+            "tagname": "rect",
+            "props": {
+                "x": "0",
+                "y": "0",
+                "width": "16",
+                "height": "16",
+                "fill": "#fff"
+            }
+        },
+        {
+            "tagname": "text",
+            "children": ["Foobar"]
+        }
+    ]
+}
+~~~
+
+It then uses a variety of [filters](#filters) to modify the tree to conform to
+how `React` expects to see props, styles, etc...
+
+If `svg-react-loader` receives a JSON string instead of string of SVG/XML, it
+expects to receive it in the above format (i.e.: objects with properties
+'tagname', 'props', and 'children'). Children is always an array (unless empty),
+and children can be objects with the mentioned props, or a plain string (for
+text nodes).
+
 ### Filters
+
+A filter is just a function that accepts one value, and it has the same `this`
+context as the `[traverse](https://www.npmjs.com/package/traverse)` API.
+
+`svg-react-loader` is really just a series of filters applied to a parsed
+SVG/XML, or JSON, string and then regenerated as a string to form a React
+functional component.
+
+Review [sanitizers/filters](./sanitizers/filters) for some examples.
 
 Report an Issue
 ---------------
