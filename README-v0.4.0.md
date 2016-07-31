@@ -20,8 +20,7 @@ modify the generated SVG Component. This allows `svg-react` to also be used as a
 pre-loader (with `filters` and `raw=true` params) for modifying SVGs before they
 are acted on by the loader version of `svg-react`.
 
-Note
-----
+### Notes
 
 > As of version 0.4.0, `svg-react-loader` no longer requires `babel` to
 > transpile the generated code. Everything is returned as an ES5-7 compatible
