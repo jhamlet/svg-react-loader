@@ -1,0 +1,26 @@
+{
+    "tagname": "svg",
+    "props": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "xmlns:xlink": "http://www.w3.org/1999/xlink",
+        "viewBox": "0 0 16 16",
+        "enable-background": "new 0 0 16 16",
+        "xml:space": "preserve"
+    },
+    "children": [
+        {
+            "tagname": "rect",
+            "props": {
+                "x": "0",
+                "y": "0",
+                "width": "16",
+                "height": "16",
+                "fill": "#fff"
+            }
+        },
+        {
+            "tagname": "text",
+            "children": ["Foobar"]
+        }
+    ]
+}
