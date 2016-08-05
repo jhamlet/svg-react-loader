@@ -4,23 +4,27 @@ var lutils   = require('loader-utils');
 var sanitize = require('./utility/sanitize');
 var getName  = require('./utility/get-name');
 var xml2js   = require('xml2js');
+var svgo     = require('svgo');
 var template = require('lodash/template');
 var assign   = require('lodash/assign');
 var keys     = require('lodash/keys');
 var partial  = require('lodash/partial');
 
-function readTemplate (callback, filepath) {
-    fs.readFile(filepath, 'utf8', function (error, contents) {
-        if (error) {
-            throw error;
-        }
-        callback(template(contents));
-    });
+var xmlParser = new xml2js.Parser();
+var svgParser = new svgo();
+//
+// read our template
+var tmplPath = path.join(__dirname, 'utility', 'template.txt');
+
+var contents = fs.readFileSync(tmplPath, 'utf8');
+var tmpl = template(contents);
+
+function parseSvg (callback, source) {
+    svgParser.optimize(source, callback);
 }
 
 function parseXml (callback, source) {
-    var xmlParser = new xml2js.Parser();
-    xmlParser.parseString(source, callback);
+    xmlParser.parseString(source.data, callback);
 }
 
 function renderJsx (opts, callback, error, xml) {
@@ -42,7 +46,7 @@ function renderJsx (opts, callback, error, xml) {
 
     var xmlBuilder = new xml2js.Builder({ headless: true });
     var xmlSrc = xmlBuilder.buildObject(xml);
-    var component = opts.tmpl({
+    var component = tmpl({
         reactDom:      opts.reactDom,
         tagName:       opts.tagName || tagName,
         displayName:   opts.displayName,
@@ -56,8 +60,6 @@ function renderJsx (opts, callback, error, xml) {
  * @param {String} source
  */
 module.exports = function (source) {
-    // read our template
-    var tmplPath = path.join(__dirname, 'utility', 'template.txt');
 
     // let webpack know about us, and get our callback
     var callback = this.async();
@@ -85,10 +87,5 @@ module.exports = function (source) {
     };
 
     var render = partial(renderJsx, opts, callback);
-    var parse = partial(parseXml, render, source);
-
-    readTemplate(function (tmpl) {
-        opts.tmpl = tmpl;
-        parse();
-    }, tmplPath);
+    parseSvg(partial(parseXml, render), source);
 };
