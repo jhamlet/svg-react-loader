@@ -18,9 +18,40 @@ function readTemplate (callback, filepath) {
     });
 }
 
-function parseXml (callback, source) {
+function getCustomRoot(xml, roots, depth, source) {
+    if (depth >= 3) {
+        return null;
+    }
+    var keyList = keys(xml);
+    for (var x = 0; x < keyList.length; x++) {
+        var key = keyList[x];
+        for (var y = 0; y < roots.length; y++) {
+            var root = roots[y];
+            if (key === root) {
+                return xml[root];
+            }
+        }
+    }
+    for (var i = 0; i < keyList.length; i++) {
+        var key = xml[keyList[i]];
+        var customRoot = getCustomRoot(key, roots, depth + 1);
+        if (customRoot != null) {
+            return customRoot;
+        }
+    }
+    return null;
+}
+
+function parseXml (opts, callback, source) {
     var xmlParser = new xml2js.Parser();
-    xmlParser.parseString(source, callback);
+    xmlParser.parseString(source, function(err, xml) {
+        if (err) return callback(err);
+        if (opts.root) {
+            callback(err, getCustomRoot(xml, opts.root.split('|'), 1, source));
+        } else {
+            callback(err, xml);
+        }
+    });
 }
 
 function renderJsx (opts, callback, error, xml) {
@@ -41,7 +72,7 @@ function renderJsx (opts, callback, error, xml) {
     var props = assign(sanitize(root).$ || {}, opts.attrs);
 
     var xmlBuilder = new xml2js.Builder({ headless: true });
-    var xmlSrc = xmlBuilder.buildObject(xml);
+    var xmlSrc = xmlBuilder.buildObject(root);
     var component = opts.tmpl({
         reactDom:      opts.reactDom,
         tagName:       opts.tagName || tagName,
@@ -76,16 +107,18 @@ module.exports = function (source) {
     var tag         = params.tag || null;
     var reactDom    = params.reactDom || 'react-dom';
     var attrs       = assign({}, params.attrs || {});
+    var root        = params.root || null;
 
     var opts = {
         reactDom:    reactDom,
         tagName:     tag,
         attrs:       attrs,
-        displayName: displayName
+        displayName: displayName,
+        root:        root,
     };
 
     var render = partial(renderJsx, opts, callback);
-    var parse = partial(parseXml, render, source);
+    var parse = partial(parseXml, opts, render, source);
 
     readTemplate(function (tmpl) {
         opts.tmpl = tmpl;

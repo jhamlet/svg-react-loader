@@ -58,6 +58,9 @@ already assigned to the tag, the value here will override that. ex.:
 `reactDom`: A string to require an alternaitve 'react-dom' module. ex.:
 `?reactDom=react`
 
+`root`: A pipe delimited list of possible root XML nodes to use instead of the one found in the source file. ex.:
+`?root=path|polygon`
+
 
 Dependencies
 ------------
@@ -97,7 +100,7 @@ Babel presets for your loader within your webpack configuration:
 ~~~js
 // file: webpack.config.js
 module.exports = {
-    
+
     loaders: [
         { test: /\.svg$/, loader: 'babel?presets[]=es2015,presets[]=react!svg-react' }
     ],
@@ -121,7 +124,7 @@ webpack configuration that points to your installed version of `react`:
 ~~~js
 // file: webpack.config.js
 module.exports = {
-    
+
     loaders: [
         { test: /\.svg$/, loader: 'babel!svg-react' }
     ],
@@ -153,7 +156,7 @@ License
 -------
 
 > Copyright (c) 2015 Jerry Hamlet <jerry@hamletink.com>
-> 
+>
 > Permission is hereby granted, free of charge, to any person
 > obtaining a copy of this software and associated documentation
 > files (the "Software"), to deal in the Software without
@@ -162,12 +165,12 @@ License
 > copies of the Software, and to permit persons to whom the
 > Software is furnished to do so, subject to the following
 > conditions:
-> 
+>
 > The above copyright notice and this permission notice shall be
 > included in all copies or substantial portions of the Software.
-> 
+>
 > The Software shall be used for Good, not Evil.
-> 
+>
 > THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 > EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 > OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
