@@ -1,18 +1,19 @@
 /*globals describe, it*/
 var react  = require('react');
+var reactDomServer  = require('react-dom/server');
 var loader = require('../');
 var babel  = require('babel-core');
 var fs     = require('fs');
 var path   = require('path');
 var _      = require('lodash');
+var assert = require('assert');
 var assign = _.assign;
 
 var defaultMock = {
-    callback:       function (error, result) {
+    callback: function (error) {
         if (error) {
             throw error;
         }
-        console.log(result);
     },
     cacheable:      function () {},
     addDependency:  function () {},
@@ -33,6 +34,11 @@ function read (filepath) {
     return fs.readFileSync(path.join(__dirname, filepath), 'utf8');
 }
 
+function replaceHelpers (src) {
+    // Will replace the require for helpers so we can test the component
+    return src.replace("require('svg-react-loader/helpers')", "require('../helpers')");
+}
+
 describe('svg-react-loader', function () {
     it('should return a function', function () {
         loader.should.be.a.function;
@@ -47,9 +53,7 @@ describe('svg-react-loader', function () {
                     throw error;
                 }
 
-                console.log(babel.transform(result, {
-                    presets: ['es2015', 'react']
-                }).code);
+                babel.transform(result, { presets: ['es2015', 'react'] }).code;
                 done();
             },
             query: '?reactDom=react',
@@ -67,26 +71,20 @@ describe('svg-react-loader', function () {
                     throw error;
                 }
 
-                var src = babel.transform(result, {
-                    presets: ['es2015', 'react']
-                }).code;
-                console.log(src);
-                fs.writeFileSync(__dirname + '/temp', src);
-                var el = react.createElement(require(__dirname + '/temp'));
-                var html = react.renderToStaticMarkup(el);
+                var src = babel.transform(result, { presets: ['es2015', 'react'] }).code;
+                var el = react.createElement(eval(replaceHelpers(src)));
+                var html = reactDomServer.renderToStaticMarkup(el);
 
                 // var el = react.createElement('style');
-                // var html = react.renderToStaticMarkup(el);
+                // var html = reactDomServer.renderToStaticMarkup(el);
 
-                console.log(html);
-                fs.unlink(__dirname + '/temp');
                 done();
             },
             resourcePath: filename
         });
     });
 
-    it.only('should handle text elements', function (done) {
+    it('should handle text elements', function (done) {
         var filename = './svg/text.svg';
 
         invoke(read(filename), {
@@ -95,19 +93,11 @@ describe('svg-react-loader', function () {
                     throw error;
                 }
 
-                var src = babel.transform(result, {
-                    presets: ['es2015', 'react']
-                }).code;
-                console.log(src);
-                fs.writeFileSync(__dirname + '/temp', src);
-                var el = react.createElement(require(__dirname + '/temp'));
-                var html = react.renderToStaticMarkup(el);
+                var src = babel.transform(result, { presets: ['es2015', 'react'] }).code;
+                var el = react.createElement(eval(replaceHelpers(src)));
+                var html = reactDomServer.renderToStaticMarkup(el);
+                assert.equal('<svg><g><title>The Title</title><text x="20" y="20">Text</text></g></svg>', html);
 
-                // var el = react.createElement('style');
-                // var html = react.renderToStaticMarkup(el);
-
-                console.log(html);
-                fs.unlink(__dirname + '/temp');
                 done();
             },
             resourcePath: filename
@@ -118,7 +108,16 @@ describe('svg-react-loader', function () {
         var filename = './svg/text.svg';
 
         invoke(read(filename), {
-            callback: function (/*error, result*/) {
+            callback: function (error, result) {
+                if (error) {
+                  throw error;
+                }
+
+                var src = babel.transform(result, { presets: ['es2015', 'react'] }).code;
+                var el = react.createElement(eval(replaceHelpers(src)));
+                var html = reactDomServer.renderToStaticMarkup(el);
+                assert.equal('<svg width="auto" height="auto"><g><title>The Title</title><text x="20" y="20">Text</text></g></svg>', html);
+
                 done();
             },
             query: '?' + JSON.stringify({
