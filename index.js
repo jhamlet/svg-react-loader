@@ -35,7 +35,6 @@ function renderJsx (opts, callback, error, xml) {
         root = xml[opts.tag] = root;
         delete xml[tagName];
         tagName = opts.tag;
-        props = root.$ = {};
     }
 
     var props = assign(sanitize(root).$ || {}, opts.attrs);
