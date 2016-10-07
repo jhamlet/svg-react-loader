@@ -3,6 +3,11 @@ SVG to React Loader
 
 > A Webpack Loader to turn SVGs into React Components
 
+> **NOTE:** [version
+> 0.4.0](https://github.com/jhamlet/svg-react-loader/blob/version-0.4.0/README.md)
+> is currently in beta and versions prior to that will no longer be supported.
+> After sufficient testing can be completed that will be the latest release.
+> Until then you can use the beta by `npm install svg-react-loader@next`.
 
 Summary
 -------
