@@ -9,12 +9,20 @@ var assign   = require('lodash/assign');
 var keys     = require('lodash/keys');
 var partial  = require('lodash/partial');
 
+var cachedTemplate = null;
+
 function readTemplate (callback, filepath) {
+    if (cachedTemplate != null) {
+        callback(cachedTemplate);
+        return;
+    }
+
     fs.readFile(filepath, 'utf8', function (error, contents) {
         if (error) {
             throw error;
         }
-        callback(template(contents));
+        cachedTemplate = template(contents);
+        callback(cachedTemplate);
     });
 }
 
