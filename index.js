@@ -36,7 +36,9 @@ function getCustomRoot(xml, roots, depth, source) {
         for (var y = 0; y < roots.length; y++) {
             var root = roots[y];
             if (key === root) {
-                return xml[root];
+                var obj = {};
+                obj[root] = xml[root][0];
+                return obj;
             }
         }
     }
