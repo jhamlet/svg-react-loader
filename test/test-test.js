@@ -47,9 +47,9 @@ describe('svg-react-loader', function () {
                     throw error;
                 }
 
-                console.log(babel.transform(result, {
-                    presets: ['es2015', 'react']
-                }).code);
+                // console.log(babel.transform(result, {
+                //     presets: ['es2015', 'react']
+                // }).code);
                 done();
             },
             query: '?reactDom=react',
@@ -70,16 +70,17 @@ describe('svg-react-loader', function () {
                 var src = babel.transform(result, {
                     presets: ['es2015', 'react']
                 }).code;
-                console.log(src);
-                fs.writeFileSync(__dirname + '/temp', src);
-                var el = react.createElement(require(__dirname + '/temp'));
+                src = src.replace('svg-react-loader/helpers', '../helpers');
+                // console.log(src);
+                fs.writeFileSync(__dirname + '/temp-styles', src);
+                var el = react.createElement(require(__dirname + '/temp-styles'));
                 var html = react.renderToStaticMarkup(el);
 
                 // var el = react.createElement('style');
                 // var html = react.renderToStaticMarkup(el);
 
-                console.log(html);
-                fs.unlink(__dirname + '/temp');
+                // console.log(html);
+                fs.unlink(__dirname + '/temp-styles');
                 done();
             },
             resourcePath: filename
@@ -98,16 +99,17 @@ describe('svg-react-loader', function () {
                 var src = babel.transform(result, {
                     presets: ['es2015', 'react']
                 }).code;
-                console.log(src);
-                fs.writeFileSync(__dirname + '/temp', src);
-                var el = react.createElement(require(__dirname + '/temp'));
+                src = src.replace('svg-react-loader/helpers', '../helpers');
+                // console.log(src);
+                fs.writeFileSync(__dirname + '/temp-text', src);
+                var el = react.createElement(require(__dirname + '/temp-text'));
                 var html = react.renderToStaticMarkup(el);
 
                 // var el = react.createElement('style');
                 // var html = react.renderToStaticMarkup(el);
 
-                console.log(html);
-                fs.unlink(__dirname + '/temp');
+                // console.log(html);
+                fs.unlink(__dirname + '/temp-text');
                 done();
             },
             resourcePath: filename
@@ -135,6 +137,36 @@ describe('svg-react-loader', function () {
                     height: 'auto'
                 }
             })
+        });
+    });
+
+    it('should handle the root option', function(done) {
+        var filename = './svg/text.svg';
+
+        invoke(read(filename), {
+            query: '?root=text',
+            callback: function (error, result) {
+                if (error) {
+                    throw error;
+                }
+
+                var src = babel.transform(result, {
+                    presets: ['es2015', 'react']
+                }).code;
+                src = src.replace('svg-react-loader/helpers', '../helpers');
+                // console.log(src);
+                fs.writeFileSync(__dirname + '/temp-root', src);
+                var el = react.createElement(require(__dirname + '/temp-root'));
+                var html = react.renderToStaticMarkup(el);
+
+                // var el = react.createElement('style');
+                // var html = react.renderToStaticMarkup(el);
+
+                fs.unlink(__dirname + '/temp-root');
+                html.should.equal('<text x="20" y="20"></text>');
+                done();
+            },
+            resourcePath: filename
         });
     });
 });
