@@ -86,7 +86,7 @@ describe('svg-react-loader', function () {
         });
     });
 
-    it.only('should handle text elements', function (done) {
+    it('should handle text elements', function (done) {
         var filename = './svg/text.svg';
 
         invoke(read(filename), {

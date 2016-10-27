@@ -82,7 +82,7 @@ function renderJsx (opts, callback, error, xml) {
     var props = assign(sanitize(root).$ || {}, opts.attrs);
 
     var xmlBuilder = new xml2js.Builder({ headless: true });
-    var xmlSrc = xmlBuilder.buildObject(root);
+    var xmlSrc = xmlBuilder.buildObject(opts.root ? root : xml);
     var component = opts.tmpl({
         reactDom:      opts.reactDom,
         tagName:       opts.tagName || tagName,
