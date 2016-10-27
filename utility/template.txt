@@ -1,5 +1,5 @@
 var React = require('react');
-var helpers = require('../helpers')(require('<%= reactDom %>'));
+var helpers = require('svg-react-loader/helpers')(require('<%= reactDom %>'));
 
 module.exports = React.createClass({
 
