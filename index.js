@@ -9,18 +9,68 @@ var assign   = require('lodash/assign');
 var keys     = require('lodash/keys');
 var partial  = require('lodash/partial');
 
+var cachedTemplate = null;
+
 function readTemplate (callback, filepath) {
+    if (cachedTemplate != null) {
+        callback(cachedTemplate);
+        return;
+    }
+
     fs.readFile(filepath, 'utf8', function (error, contents) {
         if (error) {
             throw error;
         }
-        callback(template(contents));
+        cachedTemplate = template(contents);
+        callback(cachedTemplate);
     });
 }
 
-function parseXml (callback, source) {
+function isArray(obj) {
+    return Object.prototype.toString.call(obj) === '[object Array]';
+}
+
+function getCustomRoot(xml, roots, depth, source) {
+    if (depth >= 10) {
+        return null;
+    }
+
+    if (isArray(xml)) {
+        xml = xml[0];
+    }
+
+    var keyList = keys(xml).filter(key => key !== '$');
+    for (var x = 0; x < keyList.length; x++) {
+        var key = keyList[x];
+        for (var y = 0; y < roots.length; y++) {
+            var root = roots[y];
+            if (key === root) {
+                var obj = {};
+                obj[root] = xml[root][0];
+                return obj;
+            }
+        }
+    }
+    for (var i = 0; i < keyList.length; i++) {
+        var key = xml[keyList[i]];
+        var customRoot = getCustomRoot(key, roots, depth + 1, source);
+        if (customRoot != null) {
+            return customRoot;
+        }
+    }
+    return null;
+}
+
+function parseXml (opts, callback, source) {
     var xmlParser = new xml2js.Parser();
-    xmlParser.parseString(source, callback);
+    xmlParser.parseString(source, function(err, xml) {
+        if (err) return callback(err);
+        if (opts.root) {
+            callback(err, getCustomRoot(xml, opts.root.split('|'), 1, source));
+        } else {
+            callback(err, xml);
+        }
+    });
 }
 
 function renderJsx (opts, callback, error, xml) {
@@ -41,7 +91,7 @@ function renderJsx (opts, callback, error, xml) {
     var props = assign(sanitize(root).$ || {}, opts.attrs);
 
     var xmlBuilder = new xml2js.Builder({ headless: true });
-    var xmlSrc = xmlBuilder.buildObject(xml);
+    var xmlSrc = xmlBuilder.buildObject(opts.root ? root : xml);
     var component = opts.tmpl({
         reactDom:      opts.reactDom,
         tagName:       opts.tagName || tagName,
@@ -76,16 +126,18 @@ module.exports = function (source) {
     var tag         = params.tag || null;
     var reactDom    = params.reactDom || 'react-dom';
     var attrs       = assign({}, params.attrs || {});
+    var root        = params.root || null;
 
     var opts = {
         reactDom:    reactDom,
         tagName:     tag,
         attrs:       attrs,
-        displayName: displayName
+        displayName: displayName,
+        root:        root,
     };
 
     var render = partial(renderJsx, opts, callback);
-    var parse = partial(parseXml, render, source);
+    var parse = partial(parseXml, opts, render, source);
 
     readTemplate(function (tmpl) {
         opts.tmpl = tmpl;
