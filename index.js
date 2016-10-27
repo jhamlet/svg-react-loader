@@ -26,11 +26,20 @@ function readTemplate (callback, filepath) {
     });
 }
 
+function isArray(obj) {
+    return Object.prototype.toString.call(obj) === '[object Array]';
+}
+
 function getCustomRoot(xml, roots, depth, source) {
-    if (depth >= 3) {
+    if (depth >= 10) {
         return null;
     }
-    var keyList = keys(xml);
+
+    if (isArray(xml)) {
+        xml = xml[0];
+    }
+
+    var keyList = keys(xml).filter(key => key !== '$');
     for (var x = 0; x < keyList.length; x++) {
         var key = keyList[x];
         for (var y = 0; y < roots.length; y++) {
@@ -44,7 +53,7 @@ function getCustomRoot(xml, roots, depth, source) {
     }
     for (var i = 0; i < keyList.length; i++) {
         var key = xml[keyList[i]];
-        var customRoot = getCustomRoot(key, roots, depth + 1);
+        var customRoot = getCustomRoot(key, roots, depth + 1, source);
         if (customRoot != null) {
             return customRoot;
         }
