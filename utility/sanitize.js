@@ -81,7 +81,9 @@ module.exports = function sanitize (xmlNode, namespaces) {
                         acc[DATA_ATTR_KEY].push([namespaces[nsKey], attr, value]);
                     }
                     else {
-                        acc[RESERVED_KEYS[key] || camelCase(key)] = value;
+                        acc[RESERVED_KEYS[key] ||
+                            (key.startsWith("aria-") || key.startsWith("data-") ? key :
+                                camelCase(key))] = value;
                     }
 
                     return acc;
