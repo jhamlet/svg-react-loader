@@ -29,6 +29,7 @@
   "homepage": "https://github.com/jhamlet/svg-react-loader#readme",
   "dependencies": {
     "css": "2.2.1",
+    "loader-utils": "0.2.15",
     "ramda": "0.21.0",
     "rx": "4.1.0",
     "traverse": "0.6.6",
@@ -47,7 +48,6 @@
     "karma-mocha-reporter": "2.0.5",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "1.7.0",
-    "loader-utils": "0.2.15",
     "mocha": "2.5.3",
     "react": "15.2.1",
     "react-addons-test-utils": "15.2.1",
