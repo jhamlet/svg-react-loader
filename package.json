@@ -1,47 +1,59 @@
 {
   "name": "svg-react-loader",
-  "fullname": "SVG to React Loader",
+  "version": "0.4.0-beta.2",
   "description": "A Webpack Loader to turn SVGs into React Components",
-  "version": "0.3.7",
+  "main": "./lib/loader.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./bin/test.sh unit",
+    "karma": "./bin/test.sh karma"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhamlet/svg-react-loader.git"
+  },
   "keywords": [
     "webpack",
     "loader",
     "react",
     "svg",
-    "component",
-    "jsx"
+    "component"
   ],
-  "main": "./index.js",
+  "author": "Jerry Hamlet <jerry@hamletink.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jhamlet/svg-react-loader/issues"
+  },
+  "homepage": "https://github.com/jhamlet/svg-react-loader#readme",
   "dependencies": {
-    "xml2js": "^0.4",
-    "lodash": "^4.12.0",
-    "loader-utils": "^0.2"
+    "css": "2.2.1",
+    "ramda": "0.21.0",
+    "rx": "4.1.0",
+    "traverse": "0.6.6",
+    "xml2js": "0.4.17"
   },
   "devDependencies": {
-    "react": "^0.14",
-    "react-dom": "^0.14",
-    "babel-core": "^6.0",
-    "babel-loader": "^6.0",
-    "babel-preset-es2015": "^6.3",
-    "babel-preset-react": "^6.3",
-    "webpack": "^1.0",
-    "webpack-dev-server": "^1.0",
-    "mocha": "^2.0",
-    "should": "^7.0"
-  },
-  "scripts": {
-    "test": "./node_modules/.bin/mocha -R spec test/test-*.js"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/jhamlet/svg-react-loader.git"
-  },
-  "bugs": {
-    "url": "http://github.com/jhamlet/svg-react-loader/issues"
-  },
-  "contributors": [
-    "Jerry Hamlet <jerry@hamletink.com> (http://hamletink.com)",
-    "Jonathan Ong <me@jongleberry.com> (http://twitter.com/jongleberry)"
-  ]
+    "babel-core": "6.11.4",
+    "babel-loader": "6.2.4",
+    "babel-preset-es2015": "6.9.0",
+    "babel-preset-react": "6.11.1",
+    "enzyme": "2.4.1",
+    "karma": "1.1.2",
+    "karma-chrome-launcher": "1.0.1",
+    "karma-cli": "1.0.1",
+    "karma-mocha": "1.1.1",
+    "karma-mocha-reporter": "2.0.5",
+    "karma-sourcemap-loader": "0.3.7",
+    "karma-webpack": "1.7.0",
+    "loader-utils": "0.2.15",
+    "mocha": "2.5.3",
+    "react": "15.2.1",
+    "react-addons-test-utils": "15.2.1",
+    "react-dom": "15.2.1",
+    "should": "9.0.2",
+    "webpack": "1.13.1",
+    "webpack-dev-server": "1.14.1"
+  }
 }

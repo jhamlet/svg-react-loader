@@ -15,28 +15,58 @@ Summary
 A wepack loader allowing for inline usage of a SVG as a React component, or for
 composing individual SVGs into larger ones.
 
-Handles namespaced attributes (xlink), and other non-react attributes/tags, on
-component mounting, so the returned `jsx` will compile cleanly with `babel`.
+The latest version has been refactored to allow for receiving an SVG/XML string
+or an JSON [object-tree](#object-tree-api) representing an SVG. This allows for
+other loaders before `svg-react` to alter/update/remove nodes before reaching
+`svg-react`.
+
+In addition, the new [filters](#filters) API allows for additional ways to
+modify the generated SVG Component. This allows `svg-react` to also be used as a
+pre-loader (with `filters` and `raw=true` params) for modifying SVGs before they
+are acted on by the loader version of `svg-react`.
+
+### Notes
+
+> As of version 0.4.0, `svg-react-loader` no longer requires `babel` to
+> transpile the generated code. Everything is returned as an ES5-7 compatible
+> module, and the component is just a
+> [function](https://facebook.github.io/react/docs/reusable-components.html#stateless-functions).
+> With that, it only works with React@>=0.14
 
 
 Installation
 ------------
 
 ~~~
-% npm install svg-react-loader
+% npm install --save-dev svg-react-loader
 ~~~
 
 
 Usage
 -----
 
+ES6+ (Assuming a `babel-loader` is used on `/\.jsx?$/` files):
+
+~~~js
+import React, { Component } from 'react';
+import Icon from 'svg-react?name=Icon!../svg/my-icon.svg';
+
+export default class MyIcon extends Component {
+    render () {
+        return <Icon className='normal' />;
+    }
+};
+~~~
+
+ES5
+
 ~~~js
 var React = require('react');
-var Icon = require('babel!svg-react!../svg/my-icon.svg?name=Icon');
+var Icon = require('svg-react?name=Icon!../svg/my-icon/svg');
 
 module.exports = React.createClass({
     render () {
-        return <Icon className='normal' />;
+        return React.createElement(Icon, { className: 'normal' });
     }
 });
 ~~~
@@ -50,102 +80,126 @@ Documentation
 Query params can be used on the loader path, or on the resource's path. Those on
 the resource will override those given for the loader.
 
-`name`: `displayName` to use for the compiled component. Defaults to using the
-resource's file name, capitalized and camelCased. ex. `"?name=MyIcon"`
+* `name`: `displayName` to use for the compiled component. Defaults to using the
+  resource's file name, capitalized and camelCased. ex. `"?name=MyIcon"`
 
-`tag`: Override the root-level tag. If given, will blow-away any attributes
-given for the tag. ex.: `"?tag=symbol"`
+* `tag`: Override the root-level tag name.
 
-`attrs`: Attributes to apply to the root-level tag. If a certain attribute is
-already assigned to the tag, the value here will override that. ex.:
-`"?attrs={className: 'mySymbol'}"`
+* `props`: Attributes to apply to the root-level tag. If a certain attribute is
+  already assigned to the tag, the value here will override that.
 
-`reactDom`: A string to require an alternaitve 'react-dom' module. ex.:
-`?reactDom=react`
+* `attrs`: Alias for `props`
 
+* `filters`: If given on the query string, it is a list of module names, or
+  filepaths, to load as [filter functions](#filters). If given in the webpack
+  config as a `svgReactLoader.filters`, or as `query.filters` for the loader
+  configuration object, it is an array of functions.
 
-Dependencies
-------------
+* `classIdPrefix`: A string to prefix all class or id selectors in found style
+  blocks, or within `className` properties, with. If indicated without a string,
+  the file's basename will be used as a prefix.
 
-As of **svg-react-loader@0.3.2** it no longer specifies any `peerDependencies`.
-It is left up to individual users to configure their local **webpack**
-installation to support this loader.
+* `raw`: If set to `true` will output the parsed object tree repesenting the SVG
+  as a JSON string. Otherwise, returns a string of JavaScript that represents
+  the component's module.
 
-**svg-react-loader** requires the following dependencies:
+* `propsMap`: If given on the query string, it is an array of colon separated
+  `propname:translatedname` pairs. If given in the webpack configuration as
+  `svgReactLoader.propsMap`, or in an object query for the loader configuration,
+  is a simple object of `propname: 'translatedname'`
 
-~~~
-react
-react-dom
-babel-loader
-babel-core
-babel-preset-es2015
-babel-preset-react
-~~~
+* `xmlnsTest`: A regular expression used to remove non-supported xmlns
+  attributes. Default is /^xmlns(Xlink)?$/
 
-> NOTE: you can review the `devDependences` of the
-> [package.json](./package.json) file for specific version numbers.
-
-The following cover specific dependencies and how to configure your webpack
-installation fro them.
-
-### Babel
-
-As of `babel@6.0` you must specify your
-[`presets`](http://babeljs.io/docs/plugins/#presets) to get this to work with
-`React`.
-
-Presets can be specified as part of a [Babel
-config](https://babeljs.io/docs/usage/babelrc/) as outlined in [Setting up Babel
-6](https://babeljs.io/blog/2015/10/31/setting-up-babel-6), or you may specify
-Babel presets for your loader within your webpack configuration:
+#### Examples
 
 ~~~js
-// file: webpack.config.js
-module.exports = {
-    
+// webpack configuration
+module: {
     loaders: [
-        { test: /\.svg$/, loader: 'babel?presets[]=es2015,presets[]=react!svg-react' }
-    ],
-
-}
-~~~
-
-
-### React Before Version 0.14.0
-
-As of `React@0.14.0` the DOM methods have been moved into its own library
-`react-dom`.
-
-**svg-react-loader** requires this library to find the rendered component and
-update its namespaced xml attributes (and some other things).
-
-If you do not want to install `react-dom` alongside your deprecated version of
-`react`, you can work-around this by creating an alias to `react-dom` in your
-webpack configuration that points to your installed version of `react`:
-
-~~~js
-// file: webpack.config.js
-module.exports = {
-    
-    loaders: [
-        { test: /\.svg$/, loader: 'babel!svg-react' }
-    ],
-
-    // ...
-
-    resolve: {
-        alias: {
-            'react-dom': __dirname + '/node_modules/react'
+        {
+            test: /\.svg$/,
+            exclude: /node_modules/,
+            loader: 'svg-react',
+            query: {
+                classIdPrefix: '[name]-[hash:8]__',
+                filters: [
+                    function (value) {
+                        // ...
+                        this.update(newvalue);
+                    }
+                ],
+                propsMap: {
+                    fillRule: 'fill-rule',
+                    foo: 'bar'
+                },
+                xmlnsTest: /^xmlns.*$/
+            }
         }
-    },
+    ]
+}
 
-    // ...
+// Resource paths
+import MyIcon from 'svg-react?name=MyIcon!../svg/icon.svg';
+import MyIcon from 'svg-react?tag=symbol!../svg/icon.svg';
+import MyIcon from 'svg-react?tag=symbol&props[]=id:my-icon?../svg/icon.svg';
+import MyIcon from 'svg-react?filters[]=./my-filter.js!../svg/icon.svg';
+~~~
+
+
+### Object Tree API
+
+Internally, `svg-react-loader` converts the given SVG/XML into an object tree
+that looks something like:
+
+~~~js
+{
+    "tagname": "svg",
+    "props": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "xmlns:xlink": "http://www.w3.org/1999/xlink",
+        "viewBox": "0 0 16 16",
+        "enable-background": "new 0 0 16 16",
+        "xml:space": "preserve"
+    },
+    "children": [
+        {
+            "tagname": "rect",
+            "props": {
+                "x": "0",
+                "y": "0",
+                "width": "16",
+                "height": "16",
+                "fill": "#fff"
+            }
+        },
+        {
+            "tagname": "text",
+            "children": ["Foobar"]
+        }
+    ]
 }
 ~~~
 
-Or, you can pass the correct module name to load with the [query
-params](#query-params).
+It then uses a variety of [filters](#filters) to modify the tree to conform to
+how `React` expects to see props, styles, etc...
 
+If `svg-react-loader` receives a JSON string instead of string of SVG/XML, it
+expects to receive it in the above format (i.e.: objects with properties
+'tagname', 'props', and 'children'). Children is always an array (unless empty),
+and children can be objects with the mentioned props, or a plain string (for
+text nodes).
+
+### Filters
+
+A filter is just a function that accepts one value, and it has the same `this`
+context as the [traverse](https://www.npmjs.com/package/traverse) API.
+
+`svg-react-loader` is really just a series of filters applied to a parsed
+SVG/XML, or JSON, string and then regenerated as a string to form a React
+functional component.
+
+Review [lib/sanitize/filters](lib/sanitize/filters) for some examples.
 
 Report an Issue
 ---------------
@@ -157,27 +211,4 @@ Report an Issue
 License
 -------
 
-> Copyright (c) 2015 Jerry Hamlet <jerry@hamletink.com>
-> 
-> Permission is hereby granted, free of charge, to any person
-> obtaining a copy of this software and associated documentation
-> files (the "Software"), to deal in the Software without
-> restriction, including without limitation the rights to use,
-> copy, modify, merge, publish, distribute, sublicense, and/or sell
-> copies of the Software, and to permit persons to whom the
-> Software is furnished to do so, subject to the following
-> conditions:
-> 
-> The above copyright notice and this permission notice shall be
-> included in all copies or substantial portions of the Software.
-> 
-> The Software shall be used for Good, not Evil.
-> 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-> EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-> OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-> NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-> HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-> WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-> FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-> OTHER DEALINGS IN THE SOFTWARE.
+[MIT](./LICENSE)
