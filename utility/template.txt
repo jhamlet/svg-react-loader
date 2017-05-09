@@ -1,17 +1,10 @@
 var React = require('react');
 var helpers = require('svg-react-loader/helpers')(require('<%= reactDom %>'));
 
-module.exports = React.createClass({
-
-    displayName: <%= JSON.stringify(displayName) %>,
-
-    getDefaultProps () {
-        return <%= JSON.stringify(defaultProps) %>;
-    },
-
+class <%= displayName %> extends React.Component {
     componentDidMount () {
         helpers.applyXmlAttributes(this);
-    },
+    }
 
     render () {
         var props = this.props;
@@ -22,6 +15,10 @@ module.exports = React.createClass({
                 <%= innerXml %>
                 {React.Children.map(children, (c) => (c))}
             </<%= tagName %>>
-        );
+       );
     }
-});
+};
+
+<%= displayName %>.defaultProps = <%= JSON.stringify(defaultProps) %>;
+
+module.exports = <%= displayName %>;
