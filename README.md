@@ -6,7 +6,7 @@ SVG to React Loader
 Summary
 -------
 
-A wepack loader allowing for inline usage of a SVG as a React component, or for
+A webpack loader allowing for inline usage of a SVG as a React component, or for
 composing individual SVGs into larger ones.
 
 The latest version has been refactored to allow for receiving an SVG/XML string
