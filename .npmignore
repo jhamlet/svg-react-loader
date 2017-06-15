@@ -1,6 +1,4 @@
 .DS_Store
-gulpfile.js
+bin
 test
-tmpl
-webpack.test.html
-build.js
+karma.conf.js
