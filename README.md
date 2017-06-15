@@ -44,7 +44,7 @@ ES6+ (Assuming a `babel-loader` is used on `/\.jsx?$/` files):
 
 ~~~js
 import React, { Component } from 'react';
-import Icon from 'svg-react?name=Icon!../svg/my-icon.svg';
+import Icon from 'svg-react-loader?name=Icon!../svg/my-icon.svg';
 
 export default class MyIcon extends Component {
     render () {
@@ -57,7 +57,7 @@ ES5
 
 ~~~js
 var React = require('react');
-var Icon = require('svg-react?name=Icon!../svg/my-icon/svg');
+var Icon = require('svg-react-loader?name=Icon!../svg/my-icon/svg');
 
 module.exports = React.createClass({
     render () {
@@ -115,7 +115,7 @@ module: {
         {
             test: /\.svg$/,
             exclude: /node_modules/,
-            loader: 'svg-react',
+            loader: 'svg-react-loader',
             query: {
                 classIdPrefix: '[name]-[hash:8]__',
                 filters: [
@@ -135,10 +135,10 @@ module: {
 }
 
 // Resource paths
-import MyIcon from 'svg-react?name=MyIcon!../svg/icon.svg';
-import MyIcon from 'svg-react?tag=symbol!../svg/icon.svg';
-import MyIcon from 'svg-react?tag=symbol&props[]=id:my-icon?../svg/icon.svg';
-import MyIcon from 'svg-react?filters[]=./my-filter.js!../svg/icon.svg';
+import MyIcon from 'svg-react-loader?name=MyIcon!../svg/icon.svg';
+import MyIcon from 'svg-react-loader?tag=symbol!../svg/icon.svg';
+import MyIcon from 'svg-react-loader?tag=symbol&props[]=id:my-icon?../svg/icon.svg';
+import MyIcon from 'svg-react-loader?filters[]=./my-filter.js!../svg/icon.svg';
 ~~~
 
 
