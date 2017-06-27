@@ -19,12 +19,18 @@ describe('svg-react-loader/lib/util/title-case', () => {
             delim: /[:-]/g,
             text: 'foo-bar-baz',
             result: 'FooBarBaz'
+        },
+        {
+            delim: '/[:-]/g',
+            text: 'foo-bar-baz',
+            result: 'FooBarBaz'
         }
     ];
 
     expectations.
     forEach((spec) => {
-        const description = `titleCase(/${spec.delim.source}/, '${spec.text}') should equal '${spec.result}'`;
+        const type = spec.delim.constructor.name;
+        const description = `titleCase(${spec.delim} as ${type}, '${spec.text}') should equal '${spec.result}'`;
 
         it(description, () => {
             titleCase(spec.delim, spec.text).
