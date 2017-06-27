@@ -56,7 +56,7 @@ ES5
 
 ~~~js
 var React = require('react');
-var Icon = require('svg-react-loader?name=Icon!../svg/my-icon/svg');
+var Icon = require('svg-react-loader?name=Icon!../svg/my-icon.svg');
 
 module.exports = React.createClass({
     render () {
@@ -103,7 +103,11 @@ the resource will override those given for the loader.
   is a simple object of `propname: 'translatedname'`
 
 * `xmlnsTest`: A regular expression used to remove non-supported xmlns
-  attributes. Default is /^xmlns(Xlink)?$/
+  attributes. Default is `/^xmlns(Xlink)?$/`
+
+* `titleCaseDelim`: A regular expression used to generate component's name. It
+  would be ignore if `name` was set.
+  Default is `/[._-]/`
 
 #### Examples
 

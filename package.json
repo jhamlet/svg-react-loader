@@ -1,6 +1,6 @@
 {
   "name": "svg-react-loader",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "A Webpack Loader to turn SVGs into React Components",
   "main": "./lib/loader.js",
   "directories": {
