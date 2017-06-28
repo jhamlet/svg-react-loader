@@ -45,7 +45,6 @@ describe('svg-react-loader/lib/component/stringify', () => {
                             'React.createElement("text",{"key":1},"Foobar")' +
                             ']);\n' +
                             '}\n\n' +
-                            'SvgReactComponent.displayName = "SvgReactComponent";\n\n' +
                             'SvgReactComponent.defaultProps = ' + JSON.stringify(expectedProps) + ';\n\n' +
                             'module.exports = SvgReactComponent;\n\n' +
                             'SvgReactComponent.default = SvgReactComponent;\n'
