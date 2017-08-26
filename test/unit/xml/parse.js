@@ -177,7 +177,7 @@ describe('svg-react-loader/lib/xml/parse', () => {
                                                 {
                                                     tagname: 'path',
                                                     props: {
-                                                        className: ".styles-test__st0",
+                                                        className: "styles-test__st0",
                                                         d: "M14.5,18v2h21v-2H14.5z M14.5,26h21v-2h-21V26z M14.5,32h21v-2h-21V32z"
                                                     }
                                                 }
