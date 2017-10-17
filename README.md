@@ -1,7 +1,7 @@
 SVG to React Loader
 ===================
 
-> A Webpack Loader to turn SVGs into React Components
+> A Fork of Webpack Loader to turn SVGs into React Components
 
 Summary
 -------
@@ -21,7 +21,7 @@ are acted on by the loader version of `svg-react`.
 
 ### Notes
 
-> As of version 0.4.0, `svg-react-loader` no longer requires `babel` to
+> As of version 0.4.0, `svg-react-loader-next` no longer requires `babel` to
 > transpile the generated code. Everything is returned as an ES5-7 compatible
 > module, and the component is just a
 > [function](https://facebook.github.io/react/docs/reusable-components.html#stateless-functions).
@@ -32,7 +32,7 @@ Installation
 ------------
 
 ~~~
-% npm install --save-dev svg-react-loader
+% npm install --save-dev svg-react-loader-next
 ~~~
 
 
@@ -43,7 +43,7 @@ ES6+ (Assuming a `babel-loader` is used on `/\.jsx?$/` files):
 
 ~~~js
 import React, { Component } from 'react';
-import Icon from 'svg-react-loader?name=Icon!../svg/my-icon.svg';
+import Icon from 'svg-react-loader-next?name=Icon!../svg/my-icon.svg';
 
 export default class MyIcon extends Component {
     render () {
@@ -56,7 +56,7 @@ ES5
 
 ~~~js
 var React = require('react');
-var Icon = require('svg-react-loader?name=Icon!../svg/my-icon.svg');
+var Icon = require('svg-react-loader-next?name=Icon!../svg/my-icon.svg');
 
 module.exports = React.createClass({
     render () {
@@ -118,7 +118,7 @@ module: {
         {
             test: /\.svg$/,
             exclude: /node_modules/,
-            loader: 'svg-react-loader',
+            loader: 'svg-react-loader-next',
             query: {
                 classIdPrefix: '[name]-[hash:8]__',
                 filters: [
@@ -137,17 +137,27 @@ module: {
     ]
 }
 
+// webpack 1
+
+This example shows how you can remove some of inkscape tags to avoid react warning on render.
+
+{
+	test: /\.svg/,
+	    loaders: [
+			'svg-react-loader-next?xmlnsTest=^(xmlns|inkscape|sodipodi|rdf|pagecolor|bordercolor|borderopacity|showgrid)(Xlink)?'
+		]
+
 // Resource paths
-import MyIcon from 'svg-react-loader?name=MyIcon!../svg/icon.svg';
-import MyIcon from 'svg-react-loader?tag=symbol!../svg/icon.svg';
-import MyIcon from 'svg-react-loader?tag=symbol&props[]=id:my-icon?../svg/icon.svg';
-import MyIcon from 'svg-react-loader?filters[]=./my-filter.js!../svg/icon.svg';
+import MyIcon from 'svg-react-loader-next?name=MyIcon!../svg/icon.svg';
+import MyIcon from 'svg-react-loader-next?tag=symbol!../svg/icon.svg';
+import MyIcon from 'svg-react-loader-next?tag=symbol&props[]=id:my-icon?../svg/icon.svg';
+import MyIcon from 'svg-react-loader-next?filters[]=./my-filter.js!../svg/icon.svg';
 ~~~
 
 
 ### Object Tree API
 
-Internally, `svg-react-loader` converts the given SVG/XML into an object tree
+Internally, `svg-react-loader-next` converts the given SVG/XML into an object tree
 that looks something like:
 
 ~~~js
@@ -182,7 +192,7 @@ that looks something like:
 It then uses a variety of [filters](#filters) to modify the tree to conform to
 how `React` expects to see props, styles, etc...
 
-If `svg-react-loader` receives a JSON string instead of string of SVG/XML, it
+If `svg-react-loader-next` receives a JSON string instead of string of SVG/XML, it
 expects to receive it in the above format (i.e.: objects with properties
 'tagname', 'props', and 'children'). Children is always an array (unless empty),
 and children can be objects with the mentioned props, or a plain string (for
@@ -193,7 +203,7 @@ text nodes).
 A filter is just a function that accepts one value, and it has the same `this`
 context as the [traverse](https://www.npmjs.com/package/traverse) API.
 
-`svg-react-loader` is really just a series of filters applied to a parsed
+`svg-react-loader-next` is really just a series of filters applied to a parsed
 SVG/XML, or JSON, string and then regenerated as a string to form a React
 functional component.
 
@@ -202,7 +212,7 @@ Review [lib/sanitize/filters](lib/sanitize/filters) for some examples.
 Report an Issue
 ---------------
 
-* [Bugs](http://github.com/jhamlet/svg-react-loader/issues)
+* [Bugs](http://github.com/nebaff/svg-react-loader-next/issues)
 * Contact the author: <jerry@hamletink.com>
 
 

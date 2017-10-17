@@ -1,7 +1,7 @@
 {
-  "name": "svg-react-loader",
-  "version": "0.4.5",
-  "description": "A Webpack Loader to turn SVGs into React Components",
+  "name": "svg-react-loader-next",
+  "version": "0.4.6",
+  "description": "A Webpack Loader to turn SVGs into React Components forked from jhamlet",
   "main": "./lib/loader.js",
   "directories": {
     "test": "test"
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jhamlet/svg-react-loader.git"
+    "url": "git+https://github.com/nebaff/svg-react-loader.git"
   },
   "keywords": [
     "webpack",
@@ -21,12 +21,12 @@
     "svg",
     "component"
   ],
-  "author": "Jerry Hamlet <jerry@hamletink.com>",
+  "author": "nebaff <nebaff.lefou@free.fr>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jhamlet/svg-react-loader/issues"
+    "url": "https://github.com/nebaff/svg-react-loader/issues"
   },
-  "homepage": "https://github.com/jhamlet/svg-react-loader#readme",
+  "homepage": "https://github.com/nebaff/svg-react-loader#readme",
   "dependencies": {
     "css": "2.2.1",
     "loader-utils": "1.1.0",
