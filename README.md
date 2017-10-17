@@ -137,6 +137,16 @@ module: {
     ]
 }
 
+// webpack 1
+
+This example shows how you can remove some of inkscape tags to avoid react warning on render.
+
+{
+	test: /\.svg/,
+	    loaders: [
+			'svg-react-loader-next?xmlnsTest=^(xmlns|inkscape|sodipodi|rdf|pagecolor|bordercolor|borderopacity|showgrid)(Xlink)?'
+		]
+
 // Resource paths
 import MyIcon from 'svg-react-loader-next?name=MyIcon!../svg/icon.svg';
 import MyIcon from 'svg-react-loader-next?tag=symbol!../svg/icon.svg';
