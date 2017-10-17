@@ -32,7 +32,7 @@ Installation
 ------------
 
 ~~~
-% npm install --save-dev svg-react-loader
+% npm install --save-dev svg-react-loader-next
 ~~~
 
 
