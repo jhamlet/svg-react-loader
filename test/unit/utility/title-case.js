@@ -24,6 +24,11 @@ describe('svg-react-loader/lib/util/title-case', () => {
             delim: '/[:-]/g',
             text: 'foo-bar-baz',
             result: 'FooBarBaz'
+        },
+        {
+            delim: '/[:-]/g',
+            text: 'foo-bar--baz',
+            result: 'FooBarBaz'
         }
     ];
 

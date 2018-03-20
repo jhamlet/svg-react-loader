@@ -29,6 +29,11 @@ describe('svg-react-loader/lib/util/camel-case', () => {
             delim: /[.:-]/g,
             text: 'foo.bar.baz',
             result: 'fooBarBaz'
+        },
+        {
+            delim: /[.:-]/g,
+            text: 'foo-bar--baz',
+            result: 'fooBarBaz'
         }
     ];
 
