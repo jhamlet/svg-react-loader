@@ -1,9 +1,9 @@
 /*globals describe, it*/
 require('should');
 
-describe('svg-react-loader/lib/sanitize/filters/prefix-style-class-id', () => {
+describe('svg-react-loader/lib/sanitize/filters/unique-svg-ids', () => {
   const traverse = require('traverse');
-  const prefixStyleClassnames =
+  const prefixFilename =
     require('../../../../lib/sanitize/filters/unique-svg-ids')({prefix: 'svgFilename__'});
 
   it('should work on a simple tree', () => {
@@ -14,7 +14,7 @@ describe('svg-react-loader/lib/sanitize/filters/prefix-style-class-id', () => {
       xlinkHref: '#a'
     };
 
-    var result = traverse.map(tree, prefixStyleClassnames);
+    var result = traverse.map(tree, prefixFilename);
 
     result.
       should.
@@ -40,7 +40,7 @@ describe('svg-react-loader/lib/sanitize/filters/prefix-style-class-id', () => {
       }
     };
 
-    const result = traverse.map(tree, prefixStyleClassnames);
+    const result = traverse.map(tree, prefixFilename);
 
     result.
       should.
@@ -55,6 +55,26 @@ describe('svg-react-loader/lib/sanitize/filters/prefix-style-class-id', () => {
           mask: 'url(#svgFilename__b)',
           xlinkHref: '#svgFilename__b'
         }
+      });
+  });
+
+  it('should not update values for fill, mask, or xlink:href if they are not references to IDs', () => {
+    const tree = {
+      id: 'c',
+      fill: '#fafafa',
+      mask: '#ae4d19',
+      xlinkHref: 'http://www.w3.org/1999/xlink'
+    };
+
+    const result = traverse.map(tree, prefixFilename);
+
+    result.
+      should.
+      eql({
+        id: 'svgFilename__c',
+        fill: '#fafafa',
+        mask: '#ae4d19',
+        xlinkHref: 'http://www.w3.org/1999/xlink'
       });
   });
 });
