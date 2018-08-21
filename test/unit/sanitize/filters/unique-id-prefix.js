@@ -29,13 +29,15 @@ describe('svg-react-loader/lib/sanitize/filters/prefix-style-class-id', () => {
   it('should work on a more complex tree', () => {
     const tree = {
       id: 'a',
-      id: 'b',
       fill: 'url(#a)',
       mask: 'url(#a)',
       xlinkHref: '#a',
-      fill: 'url(#b)',
-      mask: 'url(#b)',
-      xlinkHref: '#b'
+      props: {
+        id: 'b',
+        fill: 'url(#b)',
+        mask: 'url(#b)',
+        xlinkHref: '#b'
+      }
     };
 
     const result = traverse.map(tree, prefixStyleClassnames);
@@ -47,10 +49,12 @@ describe('svg-react-loader/lib/sanitize/filters/prefix-style-class-id', () => {
         fill: 'url(#svgFilename__a)',
         mask: 'url(#svgFilename__a)',
         xlinkHref: '#svgFilename__a',
-        id: 'svgFilename__b',
-        fill: 'url(#svgFilename__b)',
-        mask: 'url(#svgFilename__b)',
-        xlinkHref: '#svgFilename__b'
+        props: {
+          id: 'svgFilename__b',
+          fill: 'url(#svgFilename__b)',
+          mask: 'url(#svgFilename__b)',
+          xlinkHref: '#svgFilename__b'
+        }
       });
   });
 });
