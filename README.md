@@ -21,8 +21,8 @@ are acted on by the loader version of `svg-react`.
 
 ### Notes
 
-> This fork has an added filter which creates unique IDs and mask, fill, and xlink:href
-> references to those IDs.
+> This fork has an added filter which creates 'unique' IDs and mask, fill, and xlink:href
+> references to those IDs by prefixing the filename.
 > As of version 0.4.0, `svg-react-loader` no longer requires `babel` to
 > transpile the generated code. Everything is returned as an ES5-7 compatible
 > module, and the component is just a
