@@ -17,10 +17,12 @@ other loaders before `svg-react` to alter/update/remove nodes before reaching
 In addition, the new [filters](#filters) API allows for additional ways to
 modify the generated SVG Component. This allows `svg-react` to also be used as a
 pre-loader (with `filters` and `raw=true` params) for modifying SVGs before they
-are acted on by the loader version of `svg-react`.
+are acted on by the loader version of `svg-react`. 
 
 ### Notes
 
+> This fork has an added filter which creates 'unique' IDs and mask, fill, and xlink:href
+> references to those IDs by prefixing the filename.
 > As of version 0.4.0, `svg-react-loader` no longer requires `babel` to
 > transpile the generated code. Everything is returned as an ES5-7 compatible
 > module, and the component is just a
@@ -93,6 +95,10 @@ the resource will override those given for the loader.
   blocks, or within `className` properties, with. If indicated without a string,
   the file's basename will be used as a prefix.
 
+* `uniqueIdPrefix`: When set to `true` will prefix the filename to the IDs and
+  references within the SVG, solving the problem of ID collision when multiple
+  SVGs are used on the same page.
+
 * `raw`: If set to `true` will output the parsed object tree repesenting the SVG
   as a JSON string. Otherwise, returns a string of JavaScript that represents
   the component's module.
@@ -121,6 +127,7 @@ module: {
             loader: 'svg-react-loader',
             query: {
                 classIdPrefix: '[name]-[hash:8]__',
+                uniqueIdPrefix: true,
                 filters: [
                     function (value) {
                         // ...
@@ -204,6 +211,7 @@ Report an Issue
 
 * [Bugs](http://github.com/jhamlet/svg-react-loader/issues)
 * Contact the author: <jerry@hamletink.com>
+* For issues with the generation of unique ID prefixes, please contact <wfbrinkert@gmail.com>
 
 
 License

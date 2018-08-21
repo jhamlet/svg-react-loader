@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jhamlet/svg-react-loader.git"
+    "url": "git+https://github.com/SilverFox70/svg-react-loader"
   },
   "keywords": [
     "webpack",
@@ -26,7 +26,7 @@
   "bugs": {
     "url": "https://github.com/jhamlet/svg-react-loader/issues"
   },
-  "homepage": "https://github.com/jhamlet/svg-react-loader#readme",
+  "homepage": "https://github.com/SilverFox70/svg-react-loader#readme",
   "dependencies": {
     "css": "2.2.1",
     "loader-utils": "1.1.0",
