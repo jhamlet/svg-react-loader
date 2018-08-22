@@ -42,7 +42,7 @@ Installation
 ------------
 > Please note that this fork is NOT yet available on NPM and therefore
 > running the command below will not get you this fork of the project.
-> This instruction is being kept for legacy pruposes and will be removed
+> This instruction is being kept for legacy purposes and will be removed
 > or updated when and if this fork becomes available on NPM.
 ~~~
 % npm install --save-dev svg-react-loader
