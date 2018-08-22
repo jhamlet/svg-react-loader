@@ -19,10 +19,18 @@ modify the generated SVG Component. This allows `svg-react` to also be used as a
 pre-loader (with `filters` and `raw=true` params) for modifying SVGs before they
 are acted on by the loader version of `svg-react`. 
 
+This fork has an added filter which creates 'unique' IDs and mask, fill, and xlink:href
+references to those IDs by prefixing the SVG filename. This solves a common problem
+encountered when loading multiple SVGs onto the same page: if the IDs within the different
+SVGs are the same, there will be ID collisions which will cause a variety of issues with 
+the rendering of the SVG components. Although there are plugins available for [SVGO](https://github.com/svg/svgo)
+designed to solve this problem, the solution implemented here provides another way to
+avoid ID collision issues on SVGs. Although this version is not yet available via NPM, 
+you may still include it in your project by placing `"svg-react-loader": "git+https://github.com/SilverFox70/svg-react-loader.git"` into your `package.json` file and running `npm install`. In order to get a clean install
+you may find it necessary to first delete your `node_modules` folder *before* running npm install again.
+
 ### Notes
 
-> This fork has an added filter which creates 'unique' IDs and mask, fill, and xlink:href
-> references to those IDs by prefixing the filename.
 > As of version 0.4.0, `svg-react-loader` no longer requires `babel` to
 > transpile the generated code. Everything is returned as an ES5-7 compatible
 > module, and the component is just a
@@ -32,7 +40,10 @@ are acted on by the loader version of `svg-react`.
 
 Installation
 ------------
-
+> Please note that this fork is NOT yet available on NPM and therefore
+> running the command below will not get you this fork of the project.
+> This instruction is being kept for legacy purposes and will be removed
+> or updated when and if this fork becomes available on NPM.
 ~~~
 % npm install --save-dev svg-react-loader
 ~~~
