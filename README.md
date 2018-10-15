@@ -109,7 +109,8 @@ the resource will override those given for the loader.
   would be ignore if `name` was set.
   Default is `/[._-]/`
 
-#### Examples
+### Examples
+#### Webpack 1
 
 ~~~js
 // webpack configuration
@@ -144,6 +145,32 @@ import MyIcon from 'svg-react-loader?tag=symbol&props[]=id:my-icon?../svg/icon.s
 import MyIcon from 'svg-react-loader?filters[]=./my-filter.js!../svg/icon.svg';
 ~~~
 
+#### Webpack 2-3
+
+~~~js
+// webpack configuration
+module: {
+    loaders: [
+        {
+            test: /\.svg$/,
+            exclude: /node_modules/,
+            use: {
+                loader: 'svg-react-loader',
+                options: {
+                    tag: 'symbol',
+                    attrs: {
+                        title: 'example',
+                    },
+                    name: 'MyIcon',
+                },
+            },
+        }
+    ]
+}
+
+// Resource paths
+import MyIcon from '../svg/icon.svg';
+~~~
 
 ### Object Tree API
 
