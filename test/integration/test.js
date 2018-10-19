@@ -99,9 +99,14 @@ describe('svg-react-loader', () => {
     it('styles.svg - with interpolation', () => {
         const wrapper = mount(<StylesInterpolation />);
 
-        if (!wrapper.html().match(/\.my-prefix-styles-1f3e1-foo/)) {
-            throw new Error('it should contain the interpolated className')
-        }
+        wrapper.
+            find('path').
+            get(0).
+            attributes['class'].
+            value.
+            should.
+            equal('my-prefix-styles-1f3e1-st0');
+
         if (wrapper.html().match(/\[name]/)) {
             throw new Error('should have [name] replaced with the filename')
         }
