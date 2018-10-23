@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { mount } from 'enzyme';
 
 import SimpleSvg from '../../lib/loader.js?name=SimpleSvg!../samples/simple.svg';
-import StylesSvg from '../../lib/loader.js?classIdPrefix!../samples/styles.svg';
+import StylesSvg from '../../lib/loader.js?classIdPrefix&uniqueIdPrefix=true!../samples/styles.svg';
 import TextSvg from '../../lib/loader.js!../samples/text.svg';
 import ObjectSvg from '../../lib/loader.js!../samples/object.json';
 
@@ -61,7 +61,7 @@ describe('svg-react-loader', () => {
 
         const expectedProps = {
             version: "1.1",
-            id: "Layer_1",
+            id: "Styles__Layer_1",
             width: "50px",
             height: "50px",
             x: "0px",
