@@ -7,6 +7,8 @@ import SimpleSvg from '../../lib/loader.js?name=SimpleSvg!../samples/simple.svg'
 import StylesSvg from '../../lib/loader.js?classIdPrefix&uniqueIdPrefix=true!../samples/styles.svg';
 import TextSvg from '../../lib/loader.js!../samples/text.svg';
 import ObjectSvg from '../../lib/loader.js!../samples/object.json';
+import ClipPathSvg from '../../lib/loader.js?uniqueIdPrefix=true!../samples/clippath.svg';
+import UseSvg from "../../lib/loader.js?uniqueIdPrefix=true!../samples/use.svg";
 
 require('should');
 
@@ -141,5 +143,42 @@ describe('svg-react-loader', () => {
             should.
             be.
             true;
+    });
+
+    it('clippath.svg', () => {
+        const wrapper = mount(<ClipPathSvg />);
+
+        const expectedClipPathProps = {
+            id: "Clippath__myClip"
+        }
+
+        const expectedUseProps = {
+            clipPath: "url(#Clippath__myClip)", 
+            xlinkHref: "#Clippath__heart", 
+            fill: "red"
+        }
+
+        getPropsMinusChildren(wrapper.find('clipPath')).
+            should.
+            eql(expectedClipPathProps);
+
+        getPropsMinusChildren(wrapper.find('use')).
+            should.
+            eql(expectedUseProps);
+    });
+
+    it('use.svg', () => {
+        const wrapper = mount(<UseSvg />);
+
+        const expectedProps = {
+            href: "#Use__myCircle", 
+            x: "20", 
+            fill: "white", 
+            stroke: "blue" 
+        }
+
+        getPropsMinusChildren(wrapper.find('use')).
+            should.
+            eql(expectedProps);
     });
 });
