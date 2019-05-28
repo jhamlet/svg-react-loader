@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 
 import SimpleSvg from '../../lib/loader.js?name=SimpleSvg!../samples/simple.svg';
 import StylesSvg from '../../lib/loader.js?classIdPrefix!../samples/styles.svg';
+import StylesInterpolation  from '../../lib/loader.js?classIdPrefix=my-prefix-[name]-[hash:5]-!../samples/styles.svg';
 import TextSvg from '../../lib/loader.js!../samples/text.svg';
 import ObjectSvg from '../../lib/loader.js!../samples/object.json';
 
@@ -92,6 +93,25 @@ describe('svg-react-loader', () => {
                 ".Styles__st0{fill-rule:evenodd;clip-rule:evenodd;fill:#B2B2B2;}" +
                 ".Styles__foo{background:url('foo/bar/baz.jpg');}"
             );
+    });
+
+    it('styles.svg - with interpolation', () => {
+        const wrapper = mount(<StylesInterpolation />);
+
+         wrapper.
+            find('path').
+            get(0).
+            attributes['class'].
+            value.
+            should.
+            equal('my-prefix-styles-1f3e1-st0');
+
+         if (wrapper.html().match(/\[name]/)) {
+            throw new Error('should have [name] replaced with the filename')
+        }
+        if (wrapper.html().match(/\[hash:5]/)) {
+            throw new Error('should have [hash:5] replaced with a hash')
+        }
     });
 
     it('text.svg', () => {
