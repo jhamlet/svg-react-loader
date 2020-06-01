@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0px" y="0px"
+    viewBox="0 0 16 16"
+    enable-background="new 0 0 16 16"
+    xml:space="preserve"
+    class="simple"
+>
+  <defs><linearGradient id="a" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0" stop-color="#ffca11"></stop><stop offset="1" stop-color="#ffad27"></stop></linearGradient><polygon id="rating-star-colored-16bf8__ratingStar" points="14.910357 6.35294118 12.4209136 7.66171903 12.896355 4.88968305 10.8823529 2.92651626 13.6656353 2.52208166 14.910357 0 16.1550787 2.52208166 18.9383611 2.92651626 16.924359 4.88968305 17.3998004 7.66171903"></polygon></defs>
+  <rect x="0" y="0" width="16" height="16" fill="url(#a)" />
+</svg>

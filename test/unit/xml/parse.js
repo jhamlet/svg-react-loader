@@ -135,7 +135,7 @@ describe('svg-react-loader/lib/xml/parse', () => {
                         eql({
                             props: {
                                 version:             '1.1',
-                                id:                  'Layer_1',
+                                id:                  'styles-test__Layer_1',
                                 width:               '50px',
                                 height:              '50px',
                                 x:                   '0px',
