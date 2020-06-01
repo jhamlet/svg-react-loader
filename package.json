@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "./bin/test.sh unit",
-    "karma": "./bin/test.sh karma"
+    "karma": "./bin/test.sh karma",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -33,7 +35,8 @@
     "ramda": "0.21.0",
     "rx": "4.1.0",
     "traverse": "0.6.6",
-    "xml2js": "0.4.17"
+    "xml2js": "0.4.17",
+    "snyk": "^1.334.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -60,5 +63,6 @@
     "should": "9.0.2",
     "webpack": "2.6.1",
     "webpack-dev-server": "^3.7.2"
-  }
+  },
+  "snyk": true
 }
