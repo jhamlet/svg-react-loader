@@ -32,11 +32,11 @@
   "dependencies": {
     "css": "2.2.4",
     "loader-utils": "1.1.0",
-    "ramda": "0.21.0",
+    "ramda": "0.27.2",
     "rx": "4.1.0",
     "traverse": "0.6.6",
     "xml2js": "0.4.17",
-    "snyk": "^1.334.0"
+    "snyk": "^1.685.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
