@@ -45,7 +45,7 @@
     "babel-preset-react": "6.11.1",
     "babel-register": "6.24.1",
     "enzyme": "2.4.1",
-    "karma": "3.0.0",
+    "karma": "6.4.1",
     "karma-chrome-launcher": "1.0.1",
     "karma-cli": "1.0.1",
     "karma-mocha": "1.3.0",
