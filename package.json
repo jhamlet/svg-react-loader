@@ -1,6 +1,6 @@
 {
   "name": "svg-react-loader",
-  "version": "0.4.6",
+  "version": "0.4.6-pre01",
   "description": "A Webpack Loader to turn SVGs into React Components",
   "main": "./lib/loader.js",
   "directories": {
@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "./bin/test.sh unit",
-    "karma": "./bin/test.sh karma"
+    "karma": "./bin/test.sh karma",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -30,22 +32,23 @@
   "dependencies": {
     "css": "2.2.4",
     "loader-utils": "1.1.0",
-    "ramda": "0.21.0",
+    "ramda": "0.27.2",
     "rx": "4.1.0",
     "traverse": "0.6.6",
-    "xml2js": "0.4.17"
+    "xml2js": "0.4.17",
+    "snyk": "^1.685.0"
   },
   "devDependencies": {
-    "babel-core": "6.11.4",
+    "babel-core": "^6.26.3",
     "babel-loader": "6.2.4",
     "babel-plugin-object-rest-spread": "0.0.0",
     "babel-plugin-transform-object-rest-spread": "6.23.0",
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-modern-browsers": "9.0.2",
     "babel-preset-react": "6.11.1",
-    "babel-register": "6.24.1",
+    "babel-register": "^6.26.0",
     "enzyme": "2.4.1",
-    "karma": "3.0.0",
+    "karma": "^4.1.0",
     "karma-chrome-launcher": "1.0.1",
     "karma-cli": "1.0.1",
     "karma-mocha": "1.3.0",
@@ -59,6 +62,7 @@
     "react-dom": "15.6.1",
     "should": "9.0.2",
     "webpack": "2.6.1",
-    "webpack-dev-server": "2.4.5"
-  }
+    "webpack-dev-server": "^3.7.2"
+  },
+  "snyk": true
 }
